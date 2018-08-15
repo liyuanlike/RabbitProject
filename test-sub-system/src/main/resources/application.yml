@@ -1,0 +1,7 @@
+server:
+  port: 8081
+
+instruct:
+  result:
+    enabled: true
+    route-key: B
