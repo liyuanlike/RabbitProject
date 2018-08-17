@@ -16,8 +16,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class ResultSender {
     private static final Logger logger = LoggerFactory.getLogger(ResultSender.class);
-    @Autowired
+//    @Autowired
     private AmqpTemplate rabbitTemplate;
+
+    public ResultSender(AmqpTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
+    }
 
     public void sendInstruct(InstructResult<?> result, String resultRouteKey){
         rabbitTemplate.convertAndSend(GlobalInfo.RESULT_TOPIC,resultRouteKey, result);

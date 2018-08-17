@@ -1,5 +1,5 @@
 server:
-  port: 8088
+  port: 8089
 
 spring:
   application:
@@ -16,6 +16,3 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/bank?characterEncoding=UTF-8&autoReconnect=true
     username: root
     password: root
-mybatis:
-  mapper-locations: classpath:mappers/*.xml
-  type-aliases-package: com.liuxun.datasource.po

@@ -19,11 +19,16 @@ import java.util.concurrent.Executors;
 public class InstructReceiver {
     private static final Logger logger = LoggerFactory.getLogger(InstructReceiver.class);
 
-    @Autowired
+//    @Autowired
     private ProcessInstructService processInstructService;
 
-    @Autowired
+//    @Autowired
     private ResultSender resultSender;
+
+    public InstructReceiver(ProcessInstructService processInstructService, ResultSender resultSender) {
+        this.processInstructService = processInstructService;
+        this.resultSender = resultSender;
+    }
 
     @RabbitListener(queues = {"#{acceptInstructQueue.name}"})
     @RabbitHandler

@@ -1,14 +1,22 @@
 package com.liuxun.datasource.core.config;
 
 import com.liuxun.datasource.core.domain.GlobalInfo;
+import com.liuxun.datasource.core.property.ResolveInstructPropertity;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@EnableConfigurationProperties(ResolveInstructPropertity.class)
 public class RabbitConfig {
+
+    @Autowired
+    private ResolveInstructPropertity propertity;
 
     /**
      * @apiNote 定义指令的主题交换器

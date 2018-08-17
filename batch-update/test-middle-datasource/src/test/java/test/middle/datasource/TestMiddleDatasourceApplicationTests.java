@@ -1,4 +1,4 @@
-package com.liuxun.datasource;
+package test.middle.datasource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class MiddleDatasourceApplicationTests {
+public class TestMiddleDatasourceApplicationTests {
 
     @Test
     public void contextLoads() {
