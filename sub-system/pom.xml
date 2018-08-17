@@ -48,11 +48,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
         <!-- 打包starter使用 @ConfigurationProperties annotation processing (metadata for IDEs)
                  生成spring-configuration-metadata.json类，需要引入此类-->
         <dependency>
@@ -64,7 +59,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
+
+        <!--打包私服必须要有maven Resource插件-->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <version>3.0.2</version>
+        </dependency>
     </dependencies>
+
+
 
     <!--<build>-->
         <!--<plugins>-->
@@ -87,5 +91,19 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <!--配置私服发布配置-->
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>Internal Releases</name>
+            <url>http://192.168.123.29:8081/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Internal Snapshots</name>
+            <url>http://192.168.123.29:8081/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>

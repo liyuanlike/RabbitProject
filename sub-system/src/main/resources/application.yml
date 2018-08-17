@@ -5,7 +5,7 @@ spring:
   application:
     name: sub-system
   rabbitmq:
-    host: localhost
+    host: 192.168.123.29
     port: 5672
     username: guest
     password: guest
