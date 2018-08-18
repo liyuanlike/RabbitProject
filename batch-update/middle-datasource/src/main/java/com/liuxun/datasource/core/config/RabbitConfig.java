@@ -42,7 +42,7 @@ public class RabbitConfig {
      */
     @Bean
     public Queue acceptInstructQueue(){
-        return new Queue(propertity.getRouteKey()+"_Queue");
+        return new Queue(propertity.getRouteKey()+"_QUEUE");
     }
 
     /**

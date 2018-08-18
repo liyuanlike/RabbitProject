@@ -42,7 +42,7 @@ public class StaterRabbitConfig {
      */
     @Bean
     public Queue acceptResultQueue(){
-        return new AnonymousQueue();
+        return new Queue(resultProperties.getRouteKey()+"_QUEUE");
     }
 
 

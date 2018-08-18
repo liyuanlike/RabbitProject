@@ -4,7 +4,7 @@ package com.global.component.config;
  * @apiNote 存放永远不会修改或值发生改变的信息
  * @author liuxun
  */
-public class GlobalInfo {
+public class GlobalCommunicationInfo {
     /**
      * @apiNote 配置接报、公众号、前置、网格以及智慧系统的之间的交换机主题
      */
