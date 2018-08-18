@@ -11,10 +11,10 @@ public class InstructSenderService {
         this.resultRouteKey = resultRouteKey;
     }
 
-    public Boolean send(String operationID,String instructId){
+    public Boolean send(String operationID,String instructId,String instructRouteKey){
         Boolean isSuccess = true;
         try {
-            instructSender.sendInstruct(operationID,resultRouteKey,instructId);
+            instructSender.sendInstruct(operationID,resultRouteKey,instructId,instructRouteKey);
         }catch (Exception e){
             isSuccess = false;
             e.printStackTrace();

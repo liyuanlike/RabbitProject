@@ -3,20 +3,28 @@ package com.liuxun.datasource.core.config;
 import com.liuxun.datasource.core.domain.GlobalInfo;
 import com.liuxun.datasource.core.property.ResolveInstructPropertity;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableConfigurationProperties(ResolveInstructPropertity.class)
+@ConditionalOnProperty(prefix = "instruct.resolve",value = "enabled",havingValue = "true") // 存在此属性时初始化此配置类
 public class RabbitConfig {
 
     @Autowired
     private ResolveInstructPropertity propertity;
+
+    @Bean
+    public AmqpTemplate rabbitTemplate(){
+        return new RabbitTemplate();
+    }
 
     /**
      * @apiNote 定义指令的主题交换器
@@ -33,7 +41,7 @@ public class RabbitConfig {
      */
     @Bean
     public Queue acceptInstructQueue(){
-        return new AnonymousQueue();
+        return new Queue(propertity.getRouteKey()+"_Queue");
     }
 
     /**
@@ -44,8 +52,9 @@ public class RabbitConfig {
      * @return
      */
     @Bean
+    @ConditionalOnMissingBean
     public Binding bindingInstructExchange(TopicExchange topicInstructExchange,Queue acceptInstructQueue){
-        return BindingBuilder.bind(acceptInstructQueue).to(topicInstructExchange).with("#");
+        return BindingBuilder.bind(acceptInstructQueue).to(topicInstructExchange).with(propertity.getRouteKey()+".RESOLVE");
     }
 
     /**

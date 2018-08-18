@@ -15,10 +15,10 @@ public class InstructSender {
     @Autowired
     private AmqpTemplate rabbitTemplate;
 
-    public void sendInstruct(String operationID,String resultRouteKey,String id){
+    public void sendInstruct(String operationID,String resultRouteKey,String id,String instructRouteKey){
         Instruction instruction = new Instruction(operationID, resultRouteKey,id);
         logger.info("==开发发送指令===");
-        rabbitTemplate.convertAndSend(GlobalInfo.INSTRUCT_CENTER_TOPIC,"", instruction);
+        rabbitTemplate.convertAndSend(GlobalInfo.INSTRUCT_CENTER_TOPIC,instructRouteKey+".RESOLVE", instruction);
     }
 
     public AmqpTemplate getRabbitTemplate() {

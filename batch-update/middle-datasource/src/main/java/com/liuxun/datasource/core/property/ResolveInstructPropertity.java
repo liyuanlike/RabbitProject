@@ -8,7 +8,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties("instruct.resolve")
 public class ResolveInstructPropertity {
-    private String routeKeysuffix = ".RESOLVE";
     private String routeKey;
 
     public String getRouteKey() {
@@ -16,6 +15,6 @@ public class ResolveInstructPropertity {
     }
 
     public void setRouteKey(String routeKey) {
-        this.routeKey = routeKey+routeKeysuffix;
+        this.routeKey = routeKey;
     }
 }

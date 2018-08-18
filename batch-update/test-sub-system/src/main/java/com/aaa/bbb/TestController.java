@@ -15,7 +15,7 @@ public class TestController {
 
     @GetMapping("/dy")
     public Object testDiaoyong(){
-        Boolean send = instructSenderService.send("query", UUID.randomUUID().toString());
+        Boolean send = instructSenderService.send("query", UUID.randomUUID().toString(),"system2");
         return send ? "send success" : "send failure";
     }
 }

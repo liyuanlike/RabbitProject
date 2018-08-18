@@ -1,6 +1,12 @@
 spring:
   rabbitmq:
-    host: 192.168.123.29
+    host: localhost
     port: 5672
     username: guest
     password: guest
+
+
+instruct:
+  resolve:
+    route-key: system2
+    enabled: true
