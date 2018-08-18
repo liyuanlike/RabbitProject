@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 public class ProcessInstructServiceImpl implements ProcessInstructService {
     @Override
     public InstructResult<?> processInstruction(String operationID,String instructRequestId) {
+
         String result = "默认不传操作编号的数据";
         if (operationID.equals("query_user")){
             result = "已查询到用户信息，如下......";

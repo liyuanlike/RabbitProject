@@ -36,8 +36,8 @@ public class GlobalReflect {
         operationIDs2.add(operationID2);
         operationIDs2.add(operationID3);
 
-        String  resolveRoutekey1 = "resolve1";
-        String  resolveRoutekey2 = "resolve2";
+        String  resolveRoutekey1 = "system1";
+        String  resolveRoutekey2 = "system2";
 
         resolveKeyOperationIdsBindingsMap.put(resolveRoutekey1,operationIDs1);
         resolveKeyOperationIdsBindingsMap.put(resolveRoutekey2,operationIDs2);

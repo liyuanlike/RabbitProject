@@ -1,6 +1,7 @@
 package com.liuxun.datasource.core.config;
 
 import com.liuxun.datasource.core.domain.GlobalInfo;
+import com.liuxun.datasource.core.domain.GlobalReflect;
 import com.liuxun.datasource.core.property.ResolveInstructPropertity;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -53,7 +54,10 @@ public class RabbitConfig {
      */
     @Bean
     @ConditionalOnMissingBean
-    public Binding bindingInstructExchange(TopicExchange topicInstructExchange,Queue acceptInstructQueue){
+    public Binding bindingInstructExchange(TopicExchange topicInstructExchange,Queue acceptInstructQueue) throws Exception{
+        if (!GlobalReflect.resolveKeyOperationIdsBindingsMap.containsKey(propertity.getRouteKey())){
+            throw  new RuntimeException("指令处理的路由键即instructRouteKey没有遵循约定 不合法");
+        }
         return BindingBuilder.bind(acceptInstructQueue).to(topicInstructExchange).with(propertity.getRouteKey()+".RESOLVE");
     }
 

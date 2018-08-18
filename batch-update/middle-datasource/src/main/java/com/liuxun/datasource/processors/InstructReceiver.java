@@ -2,6 +2,7 @@ package com.liuxun.datasource.processors;
 
 import com.alibaba.fastjson.JSON;
 import com.liuxun.datasource.core.domain.GlobalInfo;
+import com.liuxun.datasource.core.domain.GlobalReflect;
 import com.liuxun.datasource.core.domain.InstructResult;
 import com.liuxun.datasource.core.domain.Instruction;
 import com.liuxun.datasource.service.ProcessInstructService;
@@ -25,9 +26,12 @@ public class InstructReceiver {
 //    @Autowired
     private ResultSender resultSender;
 
-    public InstructReceiver(ProcessInstructService processInstructService, ResultSender resultSender) {
+    private String instructResolveRouteKey;
+
+    public InstructReceiver(ProcessInstructService processInstructService, ResultSender resultSender,String instructResolveRouteKey) {
         this.processInstructService = processInstructService;
         this.resultSender = resultSender;
+        this.instructResolveRouteKey = instructResolveRouteKey;
     }
 
     @RabbitListener(queues = {"#{acceptInstructQueue.name}"})
@@ -45,14 +49,26 @@ public class InstructReceiver {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                InstructResult instructResult = processInstructService.processInstruction(instruction.getOperationID(),instruction.getId());
-                logger.info("==处理完毕返回指令结果 结果队列Route_key={} InstructResult={} ",instruction.getResultRouteKey(), JSON.toJSONString(instructResult));
-                logger.info("==开始发送处理结果......");
-                // 开发发送处理结果
-                resultSender.sendInstruct(instructResult,instruction.getResultRouteKey());
-                logger.info("==结果返回完毕");
+                if (GlobalReflect.operationIDToInstructTaskMap.containsKey(instruction.getOperationID())
+                        && GlobalReflect.resolveKeyOperationIdsBindingsMap.containsKey(instructResolveRouteKey)
+                        && GlobalReflect.resolveKeyOperationIdsBindingsMap.get(instructResolveRouteKey).contains(instruction.getOperationID())){
+                    InstructResult instructResult = processInstructService.processInstruction(instruction.getOperationID(),instruction.getId());
+                    logger.info("==处理完毕返回指令结果 结果队列Route_key={} InstructResult={} ",instruction.getResultRouteKey(), JSON.toJSONString(instructResult));
+                    logger.info("==开始发送处理结果......");
+                    // 开发发送处理结果
+                    resultSender.sendInstruct(instructResult,instruction.getResultRouteKey());
+                    logger.info("==结果返回完毕");
+                }else {
+                    InstructResult instructResult = new InstructResult(instruction.getOperationID(),false,null,instruction.getId());
+                    logger.info("===指令不合法 返回失败的处理结果=====instructResult= {}",instructResult);
+                    resultSender.sendInstruct(instructResult,instruction.getResultRouteKey());
+                    logger.info("===返回错误提示信息完毕==========");
+                }
+
+
             }
         });
 
     }
+
 }

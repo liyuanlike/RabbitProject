@@ -8,5 +8,5 @@ spring:
 
 instruct:
   resolve:
-    route-key: system2
+    route-key: system3
     enabled: true
