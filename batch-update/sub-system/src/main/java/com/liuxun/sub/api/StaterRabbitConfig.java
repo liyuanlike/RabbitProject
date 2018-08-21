@@ -37,7 +37,7 @@ public class StaterRabbitConfig {
     }
 
     /**
-     * @apiNote 定义自动删除匿名队列 用于接收处理结果
+     * @apiNote 定义自动队列 用于接收处理结果
      * @return
      */
     @Bean

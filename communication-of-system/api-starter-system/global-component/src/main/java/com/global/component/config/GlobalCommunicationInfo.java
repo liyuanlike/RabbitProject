@@ -15,27 +15,27 @@ public class GlobalCommunicationInfo {
      * @apiNote 部委前置系统标志
      * 命名规范: {系统类型}_MODE
      */
-    private static final String PREPOSITION_MODE = "PREPOSITION";
+    public static final String PREPOSITION_MODE = "PREPOSITION";
 
     /**
      * @apiNote 公众号系统标志
      */
-    private static final String WECHAT_MODE = "WECHAT";
+    public static final String WECHAT_MODE = "WECHAT";
 
     /**
      * @apiNote 网格员系统标志
      */
-    private static final String GRIDMAN_MODE = "GRIDMAN";
+    public static final String GRIDMAN_MODE = "GRIDMAN";
 
     /**
      * @apiNote 接报系统标志
      */
-    private static final String REPORTING_MODE = "REPORTING";
+    public static final String REPORTING_MODE = "REPORTING";
 
     /**
      * @apiNote 指挥系统标志
      */
-    private   static final String DIRECT_MODE = "DIRECT";
+    public static final String DIRECT_MODE = "DIRECT";
 
     //*********************************************** SUFFIX ************************************************
 
@@ -113,7 +113,7 @@ public class GlobalCommunicationInfo {
     /**
      * @apiNote 接报系统接收事件消息的 交换机绑定标识
      */
-    public static final String REPORTING_ACCEPT_EVENT_BINDING = "#." + EVENT_SUFFIX;
+    public static final String REPORTING_ACCEPT_EVENT_BINDING = "#" + EVENT_SUFFIX;
 
     /**
      * @apiNote 指挥系统接收协调事件的 交换机绑定标识
@@ -134,13 +134,37 @@ public class GlobalCommunicationInfo {
     public static final String  GRIDMAN_ACCEPT_INSTRUCTION_BINDING = DIRECT_TO_GRIDMAN_INSTRUCTION_ROUTEKEY;
 
     /**
-     * @apiNote 指挥系统接收部委前置系统执行状况的 交换机绑定标识
+     * @apiNote 指挥系统接收部委前置以及网格员系统执行状况的 交换机绑定标识
      */
-    public static final String DIRECT_ACCEPT_PREPOSITION_EXECUTION_BINDING = PREPOSITION_MODE + EXECUTION_STATUS_SUFFIX;
+    public static final String DIRECT_ACCEPT_EXECUTION_BINDING = "#" + EXECUTION_STATUS_SUFFIX;
+
+    //******************************************** QUEUE NAMES    **********************************************
+    private static final String QUEUE_SUFFIX = "_QUEUE";  // 所有队列名称的统一后缀
 
     /**
-     * @apiNote 指挥系统接收网格员系统执行状况的 交换机绑定标识
+     * @apiNote 接报系统获取 部委前置系统、公众号、网格员 等系统发送事件消息的队列名称
      */
-    public static final String DIRECT_ACCEPT_GRIDMAN_EXECUTION_BINDING = GRIDMAN_MODE + EXECUTION_STATUS_SUFFIX;
+    public static final String REPORTING_ACCEPT_EVENT_QUEUE = REPORTING_MODE + "_ACCEPT_EVENT" +QUEUE_SUFFIX;
+
+    /**
+     * @apiNote 指挥系统获取 接报系统发送协调事件的 队列名称
+     */
+    public static final String DIRECT_ACCEPT_COORDINATION_QUEUE = DIRECT_MODE + "_ACCEPT_COORDINATION" + QUEUE_SUFFIX;
+
+    /**
+     * @apiNote 指挥系统获取部委前置以及网格员系统发送过来的执行状况的队列名称
+     */
+    public static final String DIRECT_ACCEPT_EXECUTION_QUEUE = DIRECT_MODE + "_ACCEPT_EXECUTION" +QUEUE_SUFFIX;
+
+
+    /**
+     * @apiNote 部委前置系统获取 指挥系统发送指令的队列名称
+     */
+    public static final String PREPOSITION_ACCEPT_INSTRUCTION = PREPOSITION_MODE + "_ACCEPT_INSTRUCTION" + QUEUE_SUFFIX;
+
+    /**
+     * @apiNote 网格员系统获取 指挥系统发送指令的队列名称
+     */
+    public static final String GRIDMAN_ACCEPT_INSRUCTION = GRIDMAN_MODE + "_ACCEPT_INSTRUCTION" +QUEUE_SUFFIX;
 
 }

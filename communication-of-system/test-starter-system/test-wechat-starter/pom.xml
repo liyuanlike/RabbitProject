@@ -3,13 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.liuxun.rabbit.test</groupId>
-    <artifactId>rabbit-sender-test</artifactId>
+    <groupId>test.wechat.starter</groupId>
+    <artifactId>test-wechat-starter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>rabbit-sender-test</name>
-    <description>测试使用</description>
+    <name>test-wechat-starter</name>
+    <description>测试公众号starter的使用</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -27,11 +27,14 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--引入公众号发送MQ消息的依赖-->
+        <dependency>
+            <groupId>com.wechat.rabbit</groupId>
+            <artifactId>wechat-rabbit-starter</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>

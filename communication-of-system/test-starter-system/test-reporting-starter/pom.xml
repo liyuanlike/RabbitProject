@@ -3,13 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.liuxun.rabbit.test</groupId>
-    <artifactId>rabbit-sender-test</artifactId>
+    <groupId>test.reporting.starter</groupId>
+    <artifactId>test-reporting-starter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>rabbit-sender-test</name>
-    <description>测试使用</description>
+    <name>test-reporting-starter</name>
+    <description>测试接报系统starter的使用</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -27,11 +27,14 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--引入接报系统的starter依赖-->
+        <dependency>
+            <groupId>reporting.rabbitmq.starter</groupId>
+            <artifactId>reporting-rabbitmq-starter</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
