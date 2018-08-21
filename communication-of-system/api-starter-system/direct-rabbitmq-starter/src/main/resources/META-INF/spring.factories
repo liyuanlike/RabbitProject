@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration =\
+  direct.rabbitmq.starter.config.DirectRabbitConfig,\
+  direct.rabbitmq.starter.config.RabbitListenerConfig

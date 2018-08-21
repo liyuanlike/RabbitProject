@@ -41,6 +41,7 @@ public class ReportCoordinationSender {
                     .setHeader(MessageBusinessHeaderKey.OBJECT_TYPE, Coordination.class.getSimpleName())
                     .setHeader(MessageBusinessHeaderKey.CONTENT_TYPE,MessageProperties.CONTENT_TYPE_JSON)
                     .setHeader(MessageBusinessHeaderKey.SOURCE,GlobalCommunicationInfo.REPORTING_MODE)
+                    .setHeader(MessageBusinessHeaderKey.DESTINATION,GlobalCommunicationInfo.DIRECT_MODE)
                     .setMessageId(UUID.randomUUID().toString().replace("-",""))
                     .build();
             this.rabbitTemplate.convertAndSend(GlobalCommunicationInfo.COMMUNICATION_TOPIC,GlobalCommunicationInfo.REPORTING_COORDINATION_ROUTEKEY,message);
