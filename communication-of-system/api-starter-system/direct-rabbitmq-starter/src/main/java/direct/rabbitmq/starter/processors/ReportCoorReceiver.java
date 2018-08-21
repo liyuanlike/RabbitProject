@@ -32,7 +32,8 @@ public abstract class ReportCoorReceiver {
 
         String objectType = (String) headers.get(MessageBusinessHeaderKey.OBJECT_TYPE);
         if (!objectType.equals(Coordination.class.getSimpleName())){
-            logger.error("====对象类型有误，请核查后重新发送！！！");
+            logger.error("====对象类型有误，请核查后重新发送！！！{}",objectType);
+            return;
         }
         Coordination coordination = JSON.parseObject(body, new TypeReference<Coordination>() {
         });

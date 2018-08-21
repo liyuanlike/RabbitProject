@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration =\
+  gridman.rabbitmq.starter.config.GridManRabbitConfig,\
+  gridman.rabbitmq.starter.config.RabbitListenerConfig

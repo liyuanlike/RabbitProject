@@ -1,6 +1,8 @@
-package preposition.rabbitmq.starter.config;
+package gridman.rabbitmq.starter.config;
 
 import com.global.component.config.GlobalCommunicationInfo;
+import gridman.rabbitmq.starter.processors.GridManEventSender;
+import gridman.rabbitmq.starter.processors.GridManExecutionSender;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -8,14 +10,12 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import preposition.rabbitmq.starter.processors.PrePositionEventSender;
-import preposition.rabbitmq.starter.processors.PrePositionExecutionSender;
 
 /**
- * @apiNote 为前置系统封装的 与消息中间件交互的配置类
+ * @apiNote 为网格员系统封装的 与消息中间件交互的配置类
  */
 @Configuration
-public class PrePositionRabbitConfig {
+public class GridManRabbitConfig {
     /**
      * @apiNote 消息中间件的消息转换器
      * @return
@@ -46,12 +46,12 @@ public class PrePositionRabbitConfig {
     }
 
     /**
-     * @apiNote 为部委前置系统定义接收指令的队列
+     * @apiNote 为网格员系统定义接收指令的队列
      * @return
      */
     @Bean
     public Queue acceptInstructionQueue(){
-        return new Queue(GlobalCommunicationInfo.PREPOSITION_ACCEPT_INSTRUCTION_QUEUE);
+        return new Queue(GlobalCommunicationInfo.GRIDMAN_ACCEPT_INSRUCTION_QUEUE);
     }
 
     /**
@@ -62,17 +62,17 @@ public class PrePositionRabbitConfig {
      */
     @Bean
     public Binding bindingInstructionExchange(TopicExchange globalExchange, Queue acceptInstructionQueue){
-        return BindingBuilder.bind(acceptInstructionQueue).to(globalExchange).with(GlobalCommunicationInfo.PREPOSITION_ACCEPT_INSTRUCTION_BINDING);
-    }
-
-
-    @Bean
-    public PrePositionExecutionSender prePositionExecutionSender(AmqpTemplate rabbitTemplate){
-        return new PrePositionExecutionSender(rabbitTemplate);
+        return BindingBuilder.bind(acceptInstructionQueue).to(globalExchange).with(GlobalCommunicationInfo.GRIDMAN_ACCEPT_INSTRUCTION_BINDING);
     }
 
     @Bean
-    public PrePositionEventSender prePositionEventSender(AmqpTemplate rabbitTemplate){
-        return new PrePositionEventSender(rabbitTemplate);
+    public GridManExecutionSender gridManExecutionSender(AmqpTemplate rabbitTemplate){
+        return new GridManExecutionSender(rabbitTemplate);
     }
+
+    @Bean
+    public GridManEventSender gridManEventSender(AmqpTemplate rabbitTemplate){
+        return new GridManEventSender(rabbitTemplate);
+    }
+
 }

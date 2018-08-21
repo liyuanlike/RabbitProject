@@ -24,6 +24,10 @@ public class ResolveEventMessage extends ReportEventReceiver {
         try {
             logger.info("==== 部委前置事件消息正在处理中......");
             Thread.sleep(3000L);
+            logger.info("==== 开始向指挥系统发送协调事件......");
+            Thread.sleep(3000L);
+            Boolean isSuccess = reportCoordinationSender.sendCoordination(new Coordination());
+            logger.info("====发送协调事件{}",isSuccess? "成功":"失败");
         }catch (InterruptedException e){
             e.printStackTrace();
         }finally {
@@ -52,6 +56,10 @@ public class ResolveEventMessage extends ReportEventReceiver {
         try {
             logger.info("==== 网格员事件消息正在处理中......");
             Thread.sleep(3000L);
+            logger.info("==== 开始向指挥系统发送协调事件......");
+            Thread.sleep(3000L);
+            Boolean isSuccess = reportCoordinationSender.sendCoordination(new Coordination());
+            logger.info("====发送协调事件{}",isSuccess? "成功":"失败");
         }catch (InterruptedException e){
             e.printStackTrace();
         }finally {

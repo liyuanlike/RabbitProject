@@ -87,12 +87,12 @@ public class GlobalCommunicationInfo {
     /**
      * @apiNote 指挥系统向部委前置系统发送指令的路由键
      */
-    public static final String DIRECT_TO_PREPOSITION_INSTRUCTION_ROUTEKEY = DIRECT_MODE + INSTRUCTION_SUFFIX;
+    public static final String DIRECT_TO_PREPOSITION_INSTRUCTION_ROUTEKEY = PREPOSITION_MODE + INSTRUCTION_SUFFIX;
 
     /**
      * @apiNote 指挥系统向网格员系统发送指令的路由键
      */
-    public static final String DIRECT_TO_GRIDMAN_INSTRUCTION_ROUTEKEY = DIRECT_MODE + INSTRUCTION_SUFFIX;
+    public static final String DIRECT_TO_GRIDMAN_INSTRUCTION_ROUTEKEY = GRIDMAN_MODE + INSTRUCTION_SUFFIX;
 
     /**
      * @apiNote 部委前置系统向指挥系统发送执行状况的路由键

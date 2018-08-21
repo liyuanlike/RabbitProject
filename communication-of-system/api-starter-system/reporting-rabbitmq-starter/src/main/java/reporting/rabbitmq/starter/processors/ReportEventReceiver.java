@@ -50,6 +50,7 @@ public abstract class ReportEventReceiver {
             resolveGridManEvent(gridManEventMessage);
         }else {
             logger.error("====消息体对象类型 {} 不合法，无法处理",objectType);
+            return;
         }
     }
 
