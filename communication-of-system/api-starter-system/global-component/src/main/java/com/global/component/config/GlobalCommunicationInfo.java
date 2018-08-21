@@ -160,11 +160,11 @@ public class GlobalCommunicationInfo {
     /**
      * @apiNote 部委前置系统获取 指挥系统发送指令的队列名称
      */
-    public static final String PREPOSITION_ACCEPT_INSTRUCTION = PREPOSITION_MODE + "_ACCEPT_INSTRUCTION" + QUEUE_SUFFIX;
+    public static final String PREPOSITION_ACCEPT_INSTRUCTION_QUEUE = PREPOSITION_MODE + "_ACCEPT_INSTRUCTION" + QUEUE_SUFFIX;
 
     /**
      * @apiNote 网格员系统获取 指挥系统发送指令的队列名称
      */
-    public static final String GRIDMAN_ACCEPT_INSRUCTION = GRIDMAN_MODE + "_ACCEPT_INSTRUCTION" +QUEUE_SUFFIX;
+    public static final String GRIDMAN_ACCEPT_INSRUCTION_QUEUE = GRIDMAN_MODE + "_ACCEPT_INSTRUCTION" +QUEUE_SUFFIX;
 
 }
