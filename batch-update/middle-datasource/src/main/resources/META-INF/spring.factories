@@ -1,3 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration =\
-   com.liuxun.datasource.core.config.RabbitConfig,\
-  com.liuxun.datasource.core.config.ServiceConfig
