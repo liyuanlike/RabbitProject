@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration =\
+  batch.update.starter.config.BatchRabbitConfig,\
+  batch.update.starter.config.BatchListenerConfig
