@@ -1,0 +1,10 @@
+#此文件会被优先加载，优先级最高。
+# 用于配置全局的，固定不变的属性，不会被覆盖
+
+#spring:
+#  rabbitmq:
+#    host: 192.168.123.29
+#    port: 5672
+#    username: guest
+#    password: guest
+

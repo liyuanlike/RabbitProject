@@ -5,3 +5,9 @@ batch:
   system:
     enabled: true
     flag: REPORTING
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    password: guest
+    username: guest
