@@ -1,0 +1,218 @@
+package projects.rabbitmq.starter.config;
+
+import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import projects.rabbitmq.starter.domain.ProjectsFlags;
+import projects.rabbitmq.starter.domain.ProjectsProperties;
+
+/**
+ * @apiNote 封装各个系统与RabbitMQ整合的配置
+ */
+
+@Configuration
+@EnableConfigurationProperties(ProjectsProperties.class)
+@ConditionalOnProperty(prefix = "projects.system",value = "enabled", havingValue = "true")
+public class ProjectsRabbitConfig {
+
+    @Autowired
+    private ProjectsProperties projectsProperties;
+
+
+    /**
+     * @apiNote 消息中间件的消息转换器
+     * @return
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public MessageConverter jsonMessageConverter() {
+        return new Jackson2JsonMessageConverter();
+    }
+
+    /**
+     * @apiNote 必须定义 用于注入senderService 否则打包成为starter会运行报错
+     *
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public AmqpTemplate rabbitTemplate(final ConnectionFactory connectionFactory){
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setMessageConverter(jsonMessageConverter());
+        return rabbitTemplate;
+    }
+
+    /**
+     * @apiNote 定义统一的 批量更新Topic主题交换机
+     * @return
+     */
+    @Bean
+    public TopicExchange projectsGlobalExchange(){
+        return new TopicExchange(ProjectsGlobalInfo.PROJECTS_TOPIC);
+    }
+
+
+    // ================================== 封装接报系统与RabbitMQ整合的配置 ================================
+    /**
+     * @apiNote  为接报系统封装获取 对应的事件消息的队列
+     * @return
+     */
+    @Bean
+    @ConditionalOnProperty(prefix = "projects.system",value = "flag", havingValue = ProjectsFlags.REPORTING_FLAG)
+    public Queue acceptEventQueue(){
+        final String queueName = ProjectsGlobalInfo.getQueueName(ProjectsFlags.REPORTING_FLAG);
+        if (queueName == null){
+            throw new RuntimeException("请检查 projects.system.flag属性值是否合法 ");
+        }
+        return new Queue(queueName);
+    }
+
+    /**
+     * @apiNote 将接收事件的队列与交换机绑定
+     * @param projectsGlobalExchange
+     * @param acceptEventQueue
+     * @return
+     */
+    @Bean
+    @ConditionalOnBean(name = {"acceptEventQueue"})
+    public Binding bindingEventToExchange(TopicExchange projectsGlobalExchange, Queue acceptEventQueue){
+        final String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag());
+        if (binding == null){
+            throw new RuntimeException("请检查  projects.system.flag属性是否合法");
+        }
+        return BindingBuilder.bind(acceptEventQueue).to(projectsGlobalExchange).with(binding);
+    }
+
+    // ================================== 指挥系统与RabbitMQ整合的配置 ================================
+
+    /**
+     * @apiNote 为指挥系统封装接收协调事件的队列
+     * @return
+     */
+    @Bean
+    @ConditionalOnProperty(prefix = "projects.system",value = "flag", havingValue = ProjectsFlags.DIRECT_FLAG)
+    public Queue acceptCoordinationQueue(){
+         String queueName = ProjectsGlobalInfo.getQueueName(ProjectsFlags.DIRECT_FLAG);
+        if (queueName == null){
+            throw new RuntimeException("请检查 projects.system.flag属性值是否合法 ");
+        }
+        return new Queue(queueName.split("-")[0]);
+    }
+    /**
+     * @apiNote 将接收协调事件的队列与交换机绑定
+     * @param projectsGlobalExchange 交换机
+     * @param acceptCoordinationQueue 接收协调事件的队列
+     * @return
+     */
+    @Bean
+    @ConditionalOnBean(name = {"acceptCoordinationQueue"})
+    public Binding bindingCoordinationToExchange(TopicExchange projectsGlobalExchange, Queue acceptCoordinationQueue){
+        final String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag());
+        if (binding == null){
+            throw new RuntimeException("请检查  projects.system.flag属性是否合法");
+        }
+        return BindingBuilder.bind(acceptCoordinationQueue).to(projectsGlobalExchange).with(binding.split("-")[0]);
+    }
+
+    /**
+     * @apiNote 为指挥系统封装接收 执行状况 的队列
+     * @return
+     */
+    @Bean
+    @ConditionalOnProperty(prefix = "projects.system",value = "flag", havingValue = ProjectsFlags.DIRECT_FLAG)
+    public Queue acceptExecutionQueue(){
+        String queueName = ProjectsGlobalInfo.getQueueName(ProjectsFlags.DIRECT_FLAG);
+        if (queueName == null){
+            throw new RuntimeException("请检查 projects.system.flag属性值是否合法 ");
+        }
+        return new Queue(queueName.split("-")[1]);
+    }
+
+    /**
+     * @apiNote 将接收执行状况的队列与交换机绑定
+     * @param projectsGlobalExchange 全局交换机
+     * @param acceptExecutionQueue    接收执行状况的队列
+     * @return
+     */
+    @Bean
+    @ConditionalOnBean(name = {"acceptExecutionQueue"})
+    public Binding bindingExecutionToExchange(TopicExchange projectsGlobalExchange, Queue acceptExecutionQueue){
+        String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag());
+        if (binding == null){
+            throw new RuntimeException("请检查  projects.system.flag属性是否合法");
+        }
+        return BindingBuilder.bind(acceptExecutionQueue).to(projectsGlobalExchange).with(binding.split("-")[1]);
+    }
+
+    // ================================== 部委前置系统与RabbitMQ整合的配置 ================================
+
+    /**
+     * @apiNote 为部委前置系统封装接收 指挥指令的队列
+     * @return
+     */
+    @Bean
+    @ConditionalOnProperty(prefix = "projects.system",value = "flag", havingValue = ProjectsFlags.PREPOSITION_FLAG)
+    public Queue prePositionAcceptInstructionQueue(){
+        String queueName = ProjectsGlobalInfo.getQueueName(ProjectsFlags.PREPOSITION_FLAG);
+        if (queueName == null){
+            throw new RuntimeException("请检查 projects.system.flag属性值是否合法 ");
+        }
+        return new Queue(queueName);
+    }
+
+    /**
+     * @apiNote 将部委前置接收命令的队列与交换机绑定
+     * @param projectsGlobalExchange 全局的交换机
+     * @param prePositionAcceptInstructionQueue 部委前置接收指令的队列
+     * @return
+     */
+    @Bean
+    @ConditionalOnBean(name = {"prePositionAcceptInstructionQueue"})
+    public Binding bindingPInstructionToExchange(TopicExchange projectsGlobalExchange, Queue prePositionAcceptInstructionQueue){
+        String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag());
+        if (binding == null){
+            throw new RuntimeException("请检查  projects.system.flag属性是否合法");
+        }
+        return BindingBuilder.bind(prePositionAcceptInstructionQueue).to(projectsGlobalExchange).with(binding);
+    }
+    // ================================== 网格员系统与RabbitMQ整合的配置 ================================
+
+    /**
+     * @apiNote 为网格员系统封装接收 指挥指令的队列
+     * @return
+     */
+    @Bean
+    @ConditionalOnProperty(prefix = "projects.system",value = "flag", havingValue = ProjectsFlags.GRIDMAN_FLAG)
+    public Queue gridManAcceptInstructionQueue(){
+        String queueName = ProjectsGlobalInfo.getQueueName(ProjectsFlags.GRIDMAN_FLAG);
+        if (queueName == null){
+            throw new RuntimeException("请检查 projects.system.flag属性值是否合法 ");
+        }
+        return new Queue(queueName);
+    }
+
+    /**
+     * @apiNote 将网格员接收命令的队列与交换机绑定
+     * @param projectsGlobalExchange 全局的交换机
+     * @param gridManAcceptInstructionQueue 网格员接收指令的队列
+     * @return
+     */
+    @Bean
+    @ConditionalOnBean(name = {"gridManAcceptInstructionQueue"})
+    public Binding bindingGInstructionToExchange(TopicExchange projectsGlobalExchange, Queue gridManAcceptInstructionQueue){
+        String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag());
+        if (binding == null){
+            throw new RuntimeException("请检查  projects.system.flag属性是否合法");
+        }
+        return BindingBuilder.bind(gridManAcceptInstructionQueue).to(projectsGlobalExchange).with(binding);
+    }
+
+}

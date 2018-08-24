@@ -16,8 +16,8 @@ import java.util.Map;
  */
 
 @Component
-public abstract class BatchReceiver {
-    private static final Logger logger = LoggerFactory.getLogger(BatchReceiver.class);
+public abstract class AbstractBatchReceiver {
+    private static final Logger logger = LoggerFactory.getLogger(AbstractBatchReceiver.class);
 
     @RabbitListener(queues = "#{acceptDataORInstruction.name}")
     @RabbitHandler

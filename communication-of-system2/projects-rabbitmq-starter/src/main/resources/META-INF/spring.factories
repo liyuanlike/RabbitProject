@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration =\
+  projects.rabbitmq.starter.config.ProjectsRabbitConfig,\
+  projects.rabbitmq.starter.config.ProjectsListenerConfig,\
+  projects.rabbitmq.starter.config.ProjectsBusinessConfig

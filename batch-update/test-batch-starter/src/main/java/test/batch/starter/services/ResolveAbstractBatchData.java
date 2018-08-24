@@ -1,14 +1,14 @@
 package test.batch.starter.services;
 
-import batch.update.starter.processors.BatchReceiver;
+import batch.update.starter.processors.AbstractBatchReceiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ResolveBatchData extends BatchReceiver {
+public class ResolveAbstractBatchData extends AbstractBatchReceiver {
 
-    private static final Logger logger = LoggerFactory.getLogger(ResolveBatchData.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResolveAbstractBatchData.class);
 
 
     @Override
