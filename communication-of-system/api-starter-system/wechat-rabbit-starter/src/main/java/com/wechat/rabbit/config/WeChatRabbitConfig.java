@@ -8,10 +8,13 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@ComponentScan(basePackages = {"com.wechat.rabbit"})
 public class WeChatRabbitConfig {
 
     /**
@@ -48,9 +51,9 @@ public class WeChatRabbitConfig {
      * @param rabbitTemplate 发送信息的模板类  自带的
      * @return
      */
-    @Bean
-    public WechatEventSender wechatEventSender(AmqpTemplate rabbitTemplate){
-        return new WechatEventSender(rabbitTemplate);
-    }
+//    @Bean
+//    public WechatEventSender wechatEventSender(AmqpTemplate rabbitTemplate){
+//        return new WechatEventSender(rabbitTemplate);
+//    }
 
 }

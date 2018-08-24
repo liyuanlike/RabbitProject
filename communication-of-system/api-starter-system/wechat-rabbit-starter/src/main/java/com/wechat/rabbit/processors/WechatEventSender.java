@@ -11,17 +11,21 @@ import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageBuilder;
 import org.springframework.amqp.core.MessageProperties;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+@Component
 public class WechatEventSender {
     private static final Logger logger = LoggerFactory.getLogger(WechatEventSender.class);
 
+    @Autowired
     private AmqpTemplate rabbitTemplate;
 
-    public WechatEventSender(AmqpTemplate rabbitTemplate) {
-        this.rabbitTemplate = rabbitTemplate;
-    }
+//    public WechatEventSender(AmqpTemplate rabbitTemplate) {
+//        this.rabbitTemplate = rabbitTemplate;
+//    }
 
     public Boolean sendWeChatEvent(WeChatEventMessage weChatEventMessage){
         Boolean isSuccess = true;
