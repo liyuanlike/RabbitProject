@@ -20,6 +20,9 @@ public class ProjectsGlobalInfo {
     private static final String EXECUTION_SUFFIX = ".EXECUTION";
     private static final String INSTRUCTION_SUFFIX = ".INSTRUCTION";
 
+    private static final String PLAN_SUFFIX = ".PLAN";   // 预案后缀标识
+    private static final String PROGRAMME_SUFFIX = ".PROGRAMME"; // 方案后缀标识
+
     /**
      * @apiNote 根据系统标志返回绑定标识
      * @param flag
@@ -35,11 +38,14 @@ public class ProjectsGlobalInfo {
             case ProjectsFlags.DIRECT_FLAG:
                 String coordinationBinding = "#" + COORDINATION_SUFFIX;
                 String executionBinding = "#" + EXECUTION_SUFFIX;
-                return coordinationBinding+"-"+executionBinding;
+                String planBinding = "#" + PLAN_SUFFIX;
+                return coordinationBinding+"-"+executionBinding+"-"+planBinding;
             case ProjectsFlags.GRIDMAN_FLAG:
                 return flag + INSTRUCTION_SUFFIX;
             case ProjectsFlags.PREPOSITION_FLAG:
                 return flag +INSTRUCTION_SUFFIX;
+            case ProjectsFlags.PLAN_FLAG:
+                return "#"+ PROGRAMME_SUFFIX;
         }
         return null;
     }
@@ -58,7 +64,8 @@ public class ProjectsGlobalInfo {
             case ProjectsFlags.DIRECT_FLAG:
                 String preposition_routeKey = getBinding(ProjectsFlags.PREPOSITION_FLAG);
                 String gridman_routeKey = getBinding(ProjectsFlags.GRIDMAN_FLAG);
-                return preposition_routeKey+"-"+gridman_routeKey;
+                String plan_routeKey = flag + PROGRAMME_SUFFIX;
+                return preposition_routeKey+"-"+gridman_routeKey+"-"+plan_routeKey;
             case ProjectsFlags.GRIDMAN_FLAG:
                 String gridmanEventRouteKey = flag + EVENT_SUFFIX;
                 String gridmanExecutionRouteKey = flag + EXECUTION_SUFFIX;
@@ -67,6 +74,8 @@ public class ProjectsGlobalInfo {
                 String prePositionEventRouteKey = flag + EVENT_SUFFIX;
                 String prePositionExecutionRouteKey = flag + EXECUTION_SUFFIX;
                 return prePositionEventRouteKey+ "-" + prePositionExecutionRouteKey;
+            case ProjectsFlags.PLAN_FLAG:
+                return flag + PLAN_SUFFIX;
         }
         return null;
     }
@@ -85,11 +94,14 @@ public class ProjectsGlobalInfo {
             case ProjectsFlags.DIRECT_FLAG:
                 String accept_coordination_queue = flag + "_ACCEPT_COORDINATION_QUEUE";
                 String accept_execution_queue = flag + "_ACCEPT_EXECUTION_QUEUE";
-                return accept_coordination_queue + accept_execution_queue;
+                String accept_plan_queue = flag + "_ACCEPT_PLAN_QUEUE";
+                return accept_coordination_queue + accept_execution_queue + accept_plan_queue;
             case ProjectsFlags.PREPOSITION_FLAG:
                 return flag + "_ACCEPT_INSTRUCTION_QUEUE";
             case ProjectsFlags.GRIDMAN_FLAG:
                 return flag + "_ACCEPT_INSTRUCTION_QUEUE";
+            case ProjectsFlags.PLAN_FLAG:
+                return flag + "_ACCEPT_PROGRAMME_QUEUE";
         }
         return null;
 

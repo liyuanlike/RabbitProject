@@ -15,6 +15,7 @@ public class ProjectsFlags {
     public static final String GRIDMAN_FLAG = "GRIDMAN"; // 网格员
     public static final String REPORTING_FLAG = "REPORTING"; // 接报
     public static final String DIRECT_FLAG = "DIRECT"; // 指挥
+    public static final String PLAN_FLAG = "PLAN"; // 预案
 
     public static Set<String> flags = new HashSet<>();
     static {
@@ -23,5 +24,6 @@ public class ProjectsFlags {
         flags.add(GRIDMAN_FLAG);
         flags.add(REPORTING_FLAG);
         flags.add(DIRECT_FLAG);
+        flags.add(PLAN_FLAG);
     }
 }

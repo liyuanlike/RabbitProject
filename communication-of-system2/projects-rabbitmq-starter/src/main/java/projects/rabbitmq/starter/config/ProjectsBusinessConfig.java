@@ -53,4 +53,9 @@ public class ProjectsBusinessConfig {
         return new GridManSender(rabbitTemplate);
     }
 
+    @Bean
+    @ConditionalOnProperty(prefix = "projects.system",value = "flag", havingValue = ProjectsFlags.PLAN_FLAG)
+    public PlanSender planSender(AmqpTemplate rabbitTemplate){
+        return new PlanSender(rabbitTemplate);
+    }
 }

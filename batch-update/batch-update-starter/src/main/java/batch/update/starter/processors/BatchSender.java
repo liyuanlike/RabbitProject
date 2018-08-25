@@ -56,6 +56,7 @@ public class BatchSender {
             final String routeKey = BatchUpdateGlobalInfo.getRouteKey(destination);
             if (routeKey == null){
                 logger.error("==== 检查destination参数{} 是否合法",routeKey);
+                return false;
             }
             this.rabbitTemplate.convertAndSend(BatchUpdateGlobalInfo.BATCH_UPDATE_TOPIC,routeKey,message);
         }catch (Exception e){

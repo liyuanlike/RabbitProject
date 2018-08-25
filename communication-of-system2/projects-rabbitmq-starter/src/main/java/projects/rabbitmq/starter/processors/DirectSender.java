@@ -48,6 +48,34 @@ public class DirectSender {
     }
 
     /**
+     * @apiNote 为指挥系统封装向预案系统发送方案的方法
+     * @param jsonProgramme
+     * @param objectClass
+     * @return
+     */
+    public Boolean sendProgramme(String jsonProgramme, Class<?> objectClass){
+        Boolean isSuccess = true;
+        if (jsonProgramme == null || objectClass == null){
+            logger.error("==== 参数不能为空");
+            return false;
+        }
+
+        final String objectType = objectClass.getSimpleName();
+        final String routeKey = ProjectsGlobalInfo.getRouteKey(ProjectsFlags.DIRECT_FLAG).split("-")[2];
+        final ProjectsMessageVO messageVO = new ProjectsMessageVO(ProjectsFlags.DIRECT_FLAG, ProjectsFlags.PLAN_FLAG, objectType, ProjectsMessageTypes.PROGRAMME_TYPE, jsonProgramme);
+        final Message message = MessageUtil.generateMessage(messageVO);
+        try {
+            rabbitTemplate.convertAndSend(ProjectsGlobalInfo.PROJECTS_TOPIC,routeKey,message);
+        }catch (Exception e){
+            e.printStackTrace();
+            isSuccess = false;
+        }finally {
+            logger.info("指挥发送方案{}",isSuccess? "成功":"失败");
+            return isSuccess;
+        }
+    }
+
+    /**
      * @apiNote 为指挥系统封装 向部委前置发送指令的方法
      * @param jsonInstruction 指令的json字符串
      * @param objectClass  可以转化的对象类型

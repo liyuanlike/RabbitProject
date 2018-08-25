@@ -152,6 +152,37 @@ public class ProjectsRabbitConfig {
         return BindingBuilder.bind(acceptExecutionQueue).to(projectsGlobalExchange).with(binding.split("-")[1]);
     }
 
+
+    /**
+     * @apiNote 为指挥系统封装接收 预案系统发来预案 的队列
+     * @return
+     */
+    @Bean
+    @ConditionalOnProperty(prefix = "projects.system",value = "flag", havingValue = ProjectsFlags.DIRECT_FLAG)
+    public Queue acceptPlanQueue(){
+        String queueName = ProjectsGlobalInfo.getQueueName(ProjectsFlags.DIRECT_FLAG);
+        if (queueName == null){
+            throw new RuntimeException("请检查 projects.system.flag属性值是否合法 ");
+        }
+        return new Queue(queueName.split("-")[2]);
+    }
+
+    /**
+     * @apiNote 将接收预案的队列与交换机绑定
+     * @param projectsGlobalExchange 全局交换机
+     * @param acceptPlanQueue    接收预案的队列
+     * @return
+     */
+    @Bean
+    @ConditionalOnBean(name = {"acceptPlanQueue"})
+    public Binding bindingAcceptPlanToExchange(TopicExchange projectsGlobalExchange, Queue acceptPlanQueue){
+        String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag());
+        if (binding == null){
+            throw new RuntimeException("请检查  projects.system.flag属性是否合法");
+        }
+        return BindingBuilder.bind(acceptPlanQueue).to(projectsGlobalExchange).with(binding.split("-")[2]);
+    }
+
     // ================================== 部委前置系统与RabbitMQ整合的配置 ================================
 
     /**
@@ -213,6 +244,37 @@ public class ProjectsRabbitConfig {
             throw new RuntimeException("请检查  projects.system.flag属性是否合法");
         }
         return BindingBuilder.bind(gridManAcceptInstructionQueue).to(projectsGlobalExchange).with(binding);
+    }
+
+    // ================================== 预案系统与RabbitMQ整合的配置 ================================
+    /**
+     * @apiNote 为预案系统封装接收 指挥发出方案的队列
+     * @return
+     */
+    @Bean
+    @ConditionalOnProperty(prefix = "projects.system",value = "flag", havingValue = ProjectsFlags.PLAN_FLAG)
+    public Queue planAcceptProgrammeQueue(){
+        String queueName = ProjectsGlobalInfo.getQueueName(ProjectsFlags.PLAN_FLAG);
+        if (queueName == null){
+            throw new RuntimeException("请检查 projects.system.flag属性值是否合法 ");
+        }
+        return new Queue(queueName);
+    }
+
+    /**
+     * @apiNote 将预案系统接收方案的队列与交换机绑定
+     * @param projectsGlobalExchange 全局的交换机
+     * @param planAcceptProgrammeQueue 预案系统接收方案的队列
+     * @return
+     */
+    @Bean
+    @ConditionalOnBean(name = {"planAcceptProgrammeQueue"})
+    public Binding bindingPlanAcceptProgrammeToExchange(TopicExchange projectsGlobalExchange, Queue planAcceptProgrammeQueue){
+        String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag());
+        if (binding == null){
+            throw new RuntimeException("请检查  projects.system.flag属性是否合法");
+        }
+        return BindingBuilder.bind(planAcceptProgrammeQueue).to(projectsGlobalExchange).with(binding);
     }
 
 }
