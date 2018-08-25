@@ -4,10 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
+import projects.rabbitmq.starter.domain.ProjectsFlags;
 import projects.rabbitmq.starter.processors.AbstractReportingReceiver;
 
 @Component
-@ConditionalOnProperty(prefix = "projects.system",value = "flag",havingValue = "REPORTING")
+@ConditionalOnProperty(prefix = "projects.system",value = "flag",havingValue = ProjectsFlags.REPORTING_FLAG)
 public class TestReportingReceiver extends AbstractReportingReceiver {
     private static final Logger logger = LoggerFactory.getLogger(TestReportingReceiver.class);
     @Override

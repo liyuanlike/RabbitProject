@@ -1,4 +1,67 @@
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+---
+# 公众号
+projects:
+  system:
+    enabled: true
+    flag: WECHAT
+server:
+  port: 8080
+spring:
+  profiles: wechat
+---
+# 部委前置
 projects:
   system:
     enabled: true
     flag: PREPOSITION
+server:
+  port: 8081
+spring:
+  profiles: preposition
+---
+# 网格员
+projects:
+  system:
+    enabled: true
+    flag: GRIDMAN
+server:
+  port: 8082
+spring:
+  profiles: gridman
+---
+# 接报
+projects:
+  system:
+    enabled: true
+    flag: REPORTING
+server:
+  port: 8083
+spring:
+  profiles: reporting
+---
+# 指挥
+projects:
+  system:
+    enabled: true
+    flag: DIRECT
+server:
+  port: 8084
+spring:
+  profiles: direct
+---
+# 预案
+projects:
+  system:
+    enabled: true
+    flag: PLAN
+server:
+  port: 8085
+spring:
+  profiles: plan

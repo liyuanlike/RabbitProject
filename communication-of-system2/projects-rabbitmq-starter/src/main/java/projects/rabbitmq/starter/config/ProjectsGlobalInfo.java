@@ -95,7 +95,7 @@ public class ProjectsGlobalInfo {
                 String accept_coordination_queue = flag + "_ACCEPT_COORDINATION_QUEUE";
                 String accept_execution_queue = flag + "_ACCEPT_EXECUTION_QUEUE";
                 String accept_plan_queue = flag + "_ACCEPT_PLAN_QUEUE";
-                return accept_coordination_queue + accept_execution_queue + accept_plan_queue;
+                return accept_coordination_queue +"-"+ accept_execution_queue +"-"+ accept_plan_queue;
             case ProjectsFlags.PREPOSITION_FLAG:
                 return flag + "_ACCEPT_INSTRUCTION_QUEUE";
             case ProjectsFlags.GRIDMAN_FLAG:
