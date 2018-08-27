@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import projects.rabbitmq.starter.domain.ProjectsFlags;
 import projects.rabbitmq.starter.domain.ProjectsProperties;
 
@@ -21,6 +22,7 @@ import projects.rabbitmq.starter.domain.ProjectsProperties;
 
 @Configuration
 @EnableConfigurationProperties(ProjectsProperties.class)
+@PropertySource(value = {"classpath:default.properties"},ignoreResourceNotFound = true)
 @ConditionalOnProperty(prefix = "projects.system",value = "enabled", havingValue = "true")
 public class ProjectsRabbitConfig {
 
