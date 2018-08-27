@@ -17,7 +17,13 @@ public class TestDirectSendController {
 
     @GetMapping("/send")
     public Object send(){
-        final Boolean aBoolean = directSender.sendInstructionToPrePosition("{}", Object.class);
+        final Boolean aBoolean = directSender.sendInstructionToPrePosition("{}", Object.class,"AAA");
+        return aBoolean ? "success" : "failure";
+    }
+
+    @GetMapping("/send0")
+    public Object send0(){
+        final Boolean aBoolean = directSender.sendInstructionToPrePosition("{}", Object.class,"BBB");
         return aBoolean ? "success" : "failure";
     }
 

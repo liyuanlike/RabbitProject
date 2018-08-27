@@ -36,7 +36,7 @@ public class PlanSender {
         }
 
         final String objectType = objectClass.getSimpleName();
-        final String routeKey = ProjectsGlobalInfo.getRouteKey(ProjectsFlags.PLAN_FLAG);
+        final String routeKey = ProjectsGlobalInfo.getRouteKey(ProjectsFlags.PLAN_FLAG,null);
         final ProjectsMessageVO messageVO = new ProjectsMessageVO(ProjectsFlags.PLAN_FLAG, ProjectsFlags.DIRECT_FLAG, objectType, ProjectsMessageTypes.PLAN_TYPE, jsonPlan);
         final Message coorMessage = MessageUtil.generateMessage(messageVO);
         try {

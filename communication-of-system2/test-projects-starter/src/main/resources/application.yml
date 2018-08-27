@@ -21,6 +21,7 @@ projects:
   system:
     enabled: true
     flag: PREPOSITION
+    id: AAA
 server:
   port: 8081
 spring:
@@ -65,3 +66,15 @@ server:
   port: 8085
 spring:
   profiles: plan
+
+---
+# 部委前置
+projects:
+  system:
+    enabled: true
+    flag: PREPOSITION
+    id: BBB
+server:
+  port: 8086
+spring:
+  profiles: preposition2

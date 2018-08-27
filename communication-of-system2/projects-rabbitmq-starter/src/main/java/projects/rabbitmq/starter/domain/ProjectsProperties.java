@@ -18,6 +18,20 @@ public class ProjectsProperties {
      */
     private Boolean enabled;
 
+
+    /**
+     * @apiNote 如果是统一类型系统的多个部部门 需要设置ID
+     */
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getFlag() {
         return flag;
     }

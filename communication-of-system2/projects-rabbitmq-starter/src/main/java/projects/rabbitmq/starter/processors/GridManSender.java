@@ -36,7 +36,7 @@ public class GridManSender {
         }
 
         final String objectType = objectClass.getSimpleName();
-        final String routeKey = ProjectsGlobalInfo.getRouteKey(ProjectsFlags.GRIDMAN_FLAG).split("-")[0];
+        final String routeKey = ProjectsGlobalInfo.getRouteKey(ProjectsFlags.GRIDMAN_FLAG,null).split("-")[0];
         final ProjectsMessageVO messageVO = new ProjectsMessageVO(ProjectsFlags.GRIDMAN_FLAG, ProjectsFlags.REPORTING_FLAG, objectType, ProjectsMessageTypes.GRIDMAN_EVENT_TYPE, jsonGridManEvent);
         final Message message = MessageUtil.generateMessage(messageVO);
         try {
@@ -64,7 +64,7 @@ public class GridManSender {
         }
 
         final String objectType = objectClass.getSimpleName();
-        final String routeKey = ProjectsGlobalInfo.getRouteKey(ProjectsFlags.GRIDMAN_FLAG).split("-")[1];
+        final String routeKey = ProjectsGlobalInfo.getRouteKey(ProjectsFlags.GRIDMAN_FLAG,null).split("-")[1];
         final ProjectsMessageVO messageVO = new ProjectsMessageVO(ProjectsFlags.GRIDMAN_FLAG, ProjectsFlags.DIRECT_FLAG, objectType, ProjectsMessageTypes.GRIDMAN_EXECUTION_TYPE, jsonGridManExecution);
         final Message message = MessageUtil.generateMessage(messageVO);
         try {

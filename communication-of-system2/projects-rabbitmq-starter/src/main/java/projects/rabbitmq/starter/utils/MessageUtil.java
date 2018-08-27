@@ -23,6 +23,7 @@ public class MessageUtil {
                 .setHeader(ProjectsHeaders.OBJECT_TYPE,projectsMessageVO.getObjectType())
                 .setHeader(ProjectsHeaders.SOURCE,projectsMessageVO.getSource())
                 .setHeader(ProjectsHeaders.DESTINATION,projectsMessageVO.getDestination())
+                .setHeader("ID",projectsMessageVO.getId() == null ? "":projectsMessageVO.getId())
                 .setMessageId(UUID.randomUUID().toString().replace("-",""))
                 .build();
         return message;

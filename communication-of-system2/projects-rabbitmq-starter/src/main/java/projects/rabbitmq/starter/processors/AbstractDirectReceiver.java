@@ -57,8 +57,9 @@ public abstract class AbstractDirectReceiver {
         final String objectType = (String) headers.get(ProjectsHeaders.OBJECT_TYPE);
         final String source = (String) headers.get(ProjectsHeaders.SOURCE);
         final String messageType = (String) headers.get(ProjectsHeaders.MESSAGE_TYPE);
+        final String id = (String) headers.get("ID");
         if (messageType.equals(ProjectsMessageTypes.PREPOSITION_EXECUTION_TYPE)){
-            resolvePrePositionExecution(body,objectType,source);
+            resolvePrePositionExecution(body,objectType,source,id);
         }else if (messageType.equals(ProjectsMessageTypes.GRIDMAN_EXECUTION_TYPE)) {
             resolveGridManExecution(body,objectType,source);
         }else{
@@ -102,8 +103,9 @@ public abstract class AbstractDirectReceiver {
      * @param jsonProPositionExecution 部委前置发送执行状况的 json字符串
      * @param objectType 可以转化的对象类型
      * @param source  来源自哪个系统
+     * @param prePositionId 部委前置系统的唯一标识
      */
-    public abstract void resolvePrePositionExecution(String jsonProPositionExecution, String objectType, String source);
+    public abstract void resolvePrePositionExecution(String jsonProPositionExecution, String objectType, String source,String prePositionId);
 
 
     /**

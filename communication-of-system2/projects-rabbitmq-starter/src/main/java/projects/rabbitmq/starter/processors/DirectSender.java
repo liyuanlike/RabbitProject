@@ -23,7 +23,7 @@ public class DirectSender {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    private Boolean sendInstruction(String jsonInstruction, Class<?> objectClass, Boolean isToPrePosition){
+    private Boolean sendInstruction(String jsonInstruction, Class<?> objectClass, Boolean isToPrePosition, String  id){
         Boolean isSuccess = true;
         if (jsonInstruction == null || objectClass == null){
             logger.error("==== 参数不能为空");
@@ -31,11 +31,11 @@ public class DirectSender {
         }
 
         final String objectType = objectClass.getSimpleName();
-        final String[] twoRouteKey = ProjectsGlobalInfo.getRouteKey(ProjectsFlags.DIRECT_FLAG).split("-");
+        final String[] twoRouteKey = ProjectsGlobalInfo.getRouteKey(ProjectsFlags.DIRECT_FLAG,id).split("-");
         final String routeKey = isToPrePosition? twoRouteKey[0]:twoRouteKey[1];
         final String destination = isToPrePosition ? ProjectsFlags.PREPOSITION_FLAG : ProjectsFlags.GRIDMAN_FLAG;
-        final ProjectsMessageVO messageVO = new ProjectsMessageVO(ProjectsFlags.DIRECT_FLAG, destination, objectType, ProjectsMessageTypes.DIRECT_INSTRUCTION_TYPE, jsonInstruction);
-        final Message message = MessageUtil.generateMessage(messageVO);
+        final ProjectsMessageVO messageVO = new ProjectsMessageVO(ProjectsFlags.DIRECT_FLAG, destination, objectType, ProjectsMessageTypes.DIRECT_INSTRUCTION_TYPE, jsonInstruction,id);
+         Message message = MessageUtil.generateMessage(messageVO);
         try {
             rabbitTemplate.convertAndSend(ProjectsGlobalInfo.PROJECTS_TOPIC,routeKey,message);
         }catch (Exception e){
@@ -61,7 +61,7 @@ public class DirectSender {
         }
 
         final String objectType = objectClass.getSimpleName();
-        final String routeKey = ProjectsGlobalInfo.getRouteKey(ProjectsFlags.DIRECT_FLAG).split("-")[2];
+        final String routeKey = ProjectsGlobalInfo.getRouteKey(ProjectsFlags.DIRECT_FLAG,null).split("-")[2];
         final ProjectsMessageVO messageVO = new ProjectsMessageVO(ProjectsFlags.DIRECT_FLAG, ProjectsFlags.PLAN_FLAG, objectType, ProjectsMessageTypes.PROGRAMME_TYPE, jsonProgramme);
         final Message message = MessageUtil.generateMessage(messageVO);
         try {
@@ -81,8 +81,8 @@ public class DirectSender {
      * @param objectClass  可以转化的对象类型
      * @return
      */
-    public Boolean sendInstructionToPrePosition(String jsonInstruction, Class<?> objectClass){
-        return sendInstruction(jsonInstruction,objectClass,true);
+    public Boolean sendInstructionToPrePosition(String jsonInstruction, Class<?> objectClass, String  prePositionId){
+        return sendInstruction(jsonInstruction,objectClass,true,prePositionId);
     }
 
     /**
@@ -92,6 +92,6 @@ public class DirectSender {
      * @return
      */
     public Boolean sendInstructionToGridMan(String jsonInstruction, Class<?> objectClass){
-        return sendInstruction(jsonInstruction,objectClass,false);
+        return sendInstruction(jsonInstruction,objectClass,false,null);
     }
 }

@@ -18,8 +18,8 @@ public class TestDirectReceiver extends AbstractDirectReceiver {
     }
 
     @Override
-    public void resolvePrePositionExecution(String jsonProPositionExecution, String objectType, String source) {
-        logger.info("+++++ 指挥系统接收到部委前置发来的执行状况 ++++++++ source={}", source);
+    public void resolvePrePositionExecution(String jsonProPositionExecution, String objectType, String source,String prePositionId) {
+        logger.info("+++++ 指挥系统接收到部委前置发来的执行状况 ++++++++ source={} prePositionId={}", source,prePositionId);
     }
 
     @Override

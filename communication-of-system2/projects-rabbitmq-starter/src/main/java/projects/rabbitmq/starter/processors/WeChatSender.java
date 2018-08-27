@@ -36,7 +36,7 @@ public class WeChatSender {
         }
 
         final String objectType = objectClass.getSimpleName();
-        final String routeKey = ProjectsGlobalInfo.getRouteKey(ProjectsFlags.WECHAT_FLAG);
+        final String routeKey = ProjectsGlobalInfo.getRouteKey(ProjectsFlags.WECHAT_FLAG,null);
         final ProjectsMessageVO messageVO = new ProjectsMessageVO(ProjectsFlags.WECHAT_FLAG, ProjectsFlags.REPORTING_FLAG, objectType, ProjectsMessageTypes.WECHAT_EVENT_TYPE, jsonWechatEvent);
         final Message message = MessageUtil.generateMessage(messageVO);
         try {

@@ -17,13 +17,13 @@ public class TestReportingReceiver extends AbstractReportingReceiver {
     }
 
     @Override
-    public void resolvePrepositionEvent(String jsonPrePositionEvent, String objectType, String source) {
+    public void resolvePrepositionEvent(String jsonPrePositionEvent, String objectType, String source,String prePositionId) {
         try {
             Thread.sleep(4000L);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        logger.info("+++++接报系统收到前置事件 sourrce={} objectType={} json={}+++++++++++++",source,objectType,jsonPrePositionEvent);
+        logger.info("+++++接报系统收到前置事件 sourrce={} objectType={} prePositionId={} json={}+++++++++++++",source,objectType,prePositionId,jsonPrePositionEvent);
     }
 
     @Override

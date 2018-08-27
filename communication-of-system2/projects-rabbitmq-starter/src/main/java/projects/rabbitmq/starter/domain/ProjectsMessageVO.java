@@ -9,6 +9,8 @@ public class ProjectsMessageVO {
     private String objectType; // 消息体可以转化的对象类型
     private String messageType; // 消息的业务类型
     private String jsonString; // 数据
+    private String id = null; // 项目标识，目前只是针对 部委前置设计
+
 
     public ProjectsMessageVO() {
     }
@@ -19,6 +21,15 @@ public class ProjectsMessageVO {
         this.objectType = objectType;
         this.messageType = messageType;
         this.jsonString = jsonString;
+    }
+
+    public ProjectsMessageVO(String source, String destination, String objectType, String messageType, String jsonString, String id) {
+        this.source = source;
+        this.destination = destination;
+        this.objectType = objectType;
+        this.messageType = messageType;
+        this.jsonString = jsonString;
+        this.id = id;
     }
 
     public String getJsonString() {
@@ -67,5 +78,13 @@ public class ProjectsMessageVO {
 
     public void setMessageType(String messageType) {
         this.messageType = messageType;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -36,7 +36,8 @@ public abstract class AbstractReportingReceiver {
         if (messageType.equals(ProjectsMessageTypes.WECHAT_EVENT_TYPE)){
             resolveWeChatEvent(body,objectType,source);
         }else if (messageType.equals(ProjectsMessageTypes.PREPOSITION_EVENT_TYPE)) {
-            resolvePrepositionEvent(body,objectType,source);
+            String id = (String) headers.get("ID");
+            resolvePrepositionEvent(body,objectType,source,id);
         }else if (messageType.equals(ProjectsMessageTypes.GRIDMAN_EVENT_TYPE)){
             resolveGridManEvent(body,objectType,source);
         }else {
@@ -58,7 +59,7 @@ public abstract class AbstractReportingReceiver {
      * @param objectType  可以转化的对象类型
      * @param source 从哪个系统发送过来的
      */
-    public abstract void resolvePrepositionEvent(String jsonPrePositionEvent,String objectType,String source);
+    public abstract void resolvePrepositionEvent(String jsonPrePositionEvent,String objectType,String source,String prePositionId);
 
     /**
      * @apiNote 处理从网格员发送过来的事件

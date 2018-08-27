@@ -28,7 +28,7 @@ public class ProjectsGlobalInfo {
      * @param flag
      * @return
      */
-    public static String getBinding(String flag){
+    public static String getBinding(String flag,String id){
 
         switch (flag){
             case ProjectsFlags.WECHAT_FLAG:
@@ -43,7 +43,7 @@ public class ProjectsGlobalInfo {
             case ProjectsFlags.GRIDMAN_FLAG:
                 return flag + INSTRUCTION_SUFFIX;
             case ProjectsFlags.PREPOSITION_FLAG:
-                return flag +INSTRUCTION_SUFFIX;
+                return flag +"."+id+INSTRUCTION_SUFFIX;
             case ProjectsFlags.PLAN_FLAG:
                 return "#"+ PROGRAMME_SUFFIX;
         }
@@ -55,15 +55,15 @@ public class ProjectsGlobalInfo {
      * @param flag
      * @return
      */
-    public static String getRouteKey(String flag){
+    public static String getRouteKey(String flag,String id){
         switch (flag){
             case ProjectsFlags.WECHAT_FLAG:
                 return flag + EVENT_SUFFIX;
             case ProjectsFlags.REPORTING_FLAG:
                 return flag + COORDINATION_SUFFIX;
             case ProjectsFlags.DIRECT_FLAG:
-                String preposition_routeKey = getBinding(ProjectsFlags.PREPOSITION_FLAG);
-                String gridman_routeKey = getBinding(ProjectsFlags.GRIDMAN_FLAG);
+                String preposition_routeKey = getBinding(ProjectsFlags.PREPOSITION_FLAG,id);
+                String gridman_routeKey = getBinding(ProjectsFlags.GRIDMAN_FLAG,null);
                 String plan_routeKey = flag + PROGRAMME_SUFFIX;
                 return preposition_routeKey+"-"+gridman_routeKey+"-"+plan_routeKey;
             case ProjectsFlags.GRIDMAN_FLAG:
@@ -85,7 +85,7 @@ public class ProjectsGlobalInfo {
      * @param flag 系统唯一标识
      * @return
      */
-    public static String getQueueName(String flag){
+    public static String getQueueName(String flag,String id){
         switch (flag){
             case ProjectsFlags.WECHAT_FLAG:
                 return null;
@@ -97,7 +97,7 @@ public class ProjectsGlobalInfo {
                 String accept_plan_queue = flag + "_ACCEPT_PLAN_QUEUE";
                 return accept_coordination_queue +"-"+ accept_execution_queue +"-"+ accept_plan_queue;
             case ProjectsFlags.PREPOSITION_FLAG:
-                return flag + "_ACCEPT_INSTRUCTION_QUEUE";
+                return flag +"_"+id+ "_ACCEPT_INSTRUCTION_QUEUE";
             case ProjectsFlags.GRIDMAN_FLAG:
                 return flag + "_ACCEPT_INSTRUCTION_QUEUE";
             case ProjectsFlags.PLAN_FLAG:

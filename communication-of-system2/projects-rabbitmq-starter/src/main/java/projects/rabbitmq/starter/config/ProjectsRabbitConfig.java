@@ -70,7 +70,7 @@ public class ProjectsRabbitConfig {
     @Bean
     @ConditionalOnProperty(prefix = "projects.system",value = "flag", havingValue = ProjectsFlags.REPORTING_FLAG)
     public Queue acceptEventQueue(){
-        final String queueName = ProjectsGlobalInfo.getQueueName(ProjectsFlags.REPORTING_FLAG);
+        final String queueName = ProjectsGlobalInfo.getQueueName(ProjectsFlags.REPORTING_FLAG,null);
         if (queueName == null){
             throw new RuntimeException("请检查 projects.system.flag属性值是否合法 ");
         }
@@ -86,7 +86,7 @@ public class ProjectsRabbitConfig {
     @Bean
     @ConditionalOnBean(name = {"acceptEventQueue"})
     public Binding bindingEventToExchange(TopicExchange projectsGlobalExchange, Queue acceptEventQueue){
-        final String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag());
+        final String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag(),null);
         if (binding == null){
             throw new RuntimeException("请检查  projects.system.flag属性是否合法");
         }
@@ -102,7 +102,7 @@ public class ProjectsRabbitConfig {
     @Bean
     @ConditionalOnProperty(prefix = "projects.system",value = "flag", havingValue = ProjectsFlags.DIRECT_FLAG)
     public Queue acceptCoordinationQueue(){
-         String queueName = ProjectsGlobalInfo.getQueueName(ProjectsFlags.DIRECT_FLAG);
+         String queueName = ProjectsGlobalInfo.getQueueName(ProjectsFlags.DIRECT_FLAG,null);
         if (queueName == null){
             throw new RuntimeException("请检查 projects.system.flag属性值是否合法 ");
         }
@@ -117,7 +117,7 @@ public class ProjectsRabbitConfig {
     @Bean
     @ConditionalOnBean(name = {"acceptCoordinationQueue"})
     public Binding bindingCoordinationToExchange(TopicExchange projectsGlobalExchange, Queue acceptCoordinationQueue){
-        final String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag());
+        final String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag(),null);
         if (binding == null){
             throw new RuntimeException("请检查  projects.system.flag属性是否合法");
         }
@@ -131,7 +131,7 @@ public class ProjectsRabbitConfig {
     @Bean
     @ConditionalOnProperty(prefix = "projects.system",value = "flag", havingValue = ProjectsFlags.DIRECT_FLAG)
     public Queue acceptExecutionQueue(){
-        String queueName = ProjectsGlobalInfo.getQueueName(ProjectsFlags.DIRECT_FLAG);
+        String queueName = ProjectsGlobalInfo.getQueueName(ProjectsFlags.DIRECT_FLAG,null);
         if (queueName == null){
             throw new RuntimeException("请检查 projects.system.flag属性值是否合法 ");
         }
@@ -147,7 +147,7 @@ public class ProjectsRabbitConfig {
     @Bean
     @ConditionalOnBean(name = {"acceptExecutionQueue"})
     public Binding bindingExecutionToExchange(TopicExchange projectsGlobalExchange, Queue acceptExecutionQueue){
-        String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag());
+        String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag(),null);
         if (binding == null){
             throw new RuntimeException("请检查  projects.system.flag属性是否合法");
         }
@@ -162,7 +162,7 @@ public class ProjectsRabbitConfig {
     @Bean
     @ConditionalOnProperty(prefix = "projects.system",value = "flag", havingValue = ProjectsFlags.DIRECT_FLAG)
     public Queue acceptPlanQueue(){
-        String queueName = ProjectsGlobalInfo.getQueueName(ProjectsFlags.DIRECT_FLAG);
+        String queueName = ProjectsGlobalInfo.getQueueName(ProjectsFlags.DIRECT_FLAG,null);
         if (queueName == null){
             throw new RuntimeException("请检查 projects.system.flag属性值是否合法 ");
         }
@@ -178,7 +178,7 @@ public class ProjectsRabbitConfig {
     @Bean
     @ConditionalOnBean(name = {"acceptPlanQueue"})
     public Binding bindingAcceptPlanToExchange(TopicExchange projectsGlobalExchange, Queue acceptPlanQueue){
-        String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag());
+        String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag(),null);
         if (binding == null){
             throw new RuntimeException("请检查  projects.system.flag属性是否合法");
         }
@@ -194,7 +194,11 @@ public class ProjectsRabbitConfig {
     @Bean
     @ConditionalOnProperty(prefix = "projects.system",value = "flag", havingValue = ProjectsFlags.PREPOSITION_FLAG)
     public Queue prePositionAcceptInstructionQueue(){
-        String queueName = ProjectsGlobalInfo.getQueueName(ProjectsFlags.PREPOSITION_FLAG);
+        final String id = projectsProperties.getId();
+        if(id == null){
+            throw new RuntimeException("请检查 projects.system.id属性值是否合法 ");
+        }
+        String queueName = ProjectsGlobalInfo.getQueueName(ProjectsFlags.PREPOSITION_FLAG,id);
         if (queueName == null){
             throw new RuntimeException("请检查 projects.system.flag属性值是否合法 ");
         }
@@ -210,7 +214,11 @@ public class ProjectsRabbitConfig {
     @Bean
     @ConditionalOnBean(name = {"prePositionAcceptInstructionQueue"})
     public Binding bindingPInstructionToExchange(TopicExchange projectsGlobalExchange, Queue prePositionAcceptInstructionQueue){
-        String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag());
+        final String id = projectsProperties.getId();
+        if(id == null){
+            throw new RuntimeException("请检查 projects.system.id属性值是否合法 ");
+        }
+        String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag(),id);
         if (binding == null){
             throw new RuntimeException("请检查  projects.system.flag属性是否合法");
         }
@@ -225,7 +233,7 @@ public class ProjectsRabbitConfig {
     @Bean
     @ConditionalOnProperty(prefix = "projects.system",value = "flag", havingValue = ProjectsFlags.GRIDMAN_FLAG)
     public Queue gridManAcceptInstructionQueue(){
-        String queueName = ProjectsGlobalInfo.getQueueName(ProjectsFlags.GRIDMAN_FLAG);
+        String queueName = ProjectsGlobalInfo.getQueueName(ProjectsFlags.GRIDMAN_FLAG,null);
         if (queueName == null){
             throw new RuntimeException("请检查 projects.system.flag属性值是否合法 ");
         }
@@ -241,7 +249,7 @@ public class ProjectsRabbitConfig {
     @Bean
     @ConditionalOnBean(name = {"gridManAcceptInstructionQueue"})
     public Binding bindingGInstructionToExchange(TopicExchange projectsGlobalExchange, Queue gridManAcceptInstructionQueue){
-        String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag());
+        String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag(),null);
         if (binding == null){
             throw new RuntimeException("请检查  projects.system.flag属性是否合法");
         }
@@ -256,7 +264,7 @@ public class ProjectsRabbitConfig {
     @Bean
     @ConditionalOnProperty(prefix = "projects.system",value = "flag", havingValue = ProjectsFlags.PLAN_FLAG)
     public Queue planAcceptProgrammeQueue(){
-        String queueName = ProjectsGlobalInfo.getQueueName(ProjectsFlags.PLAN_FLAG);
+        String queueName = ProjectsGlobalInfo.getQueueName(ProjectsFlags.PLAN_FLAG,null);
         if (queueName == null){
             throw new RuntimeException("请检查 projects.system.flag属性值是否合法 ");
         }
@@ -272,7 +280,7 @@ public class ProjectsRabbitConfig {
     @Bean
     @ConditionalOnBean(name = {"planAcceptProgrammeQueue"})
     public Binding bindingPlanAcceptProgrammeToExchange(TopicExchange projectsGlobalExchange, Queue planAcceptProgrammeQueue){
-        String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag());
+        String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag(),null);
         if (binding == null){
             throw new RuntimeException("请检查  projects.system.flag属性是否合法");
         }

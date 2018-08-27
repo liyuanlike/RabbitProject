@@ -17,9 +17,11 @@ public class PrePositionSender {
     private static final Logger logger = LoggerFactory.getLogger(PrePositionSender.class);
 
     private AmqpTemplate rabbitTemplate;
+    private String id;
 
-    public PrePositionSender(AmqpTemplate rabbitTemplate) {
+    public PrePositionSender(AmqpTemplate rabbitTemplate,String id) {
         this.rabbitTemplate = rabbitTemplate;
+        this.id = id;
     }
 
     /**
@@ -36,8 +38,8 @@ public class PrePositionSender {
         }
 
         final String objectType = objectClass.getSimpleName();
-        final String routeKey = ProjectsGlobalInfo.getRouteKey(ProjectsFlags.PREPOSITION_FLAG).split("-")[0];
-        final ProjectsMessageVO messageVO = new ProjectsMessageVO(ProjectsFlags.PREPOSITION_FLAG, ProjectsFlags.REPORTING_FLAG, objectType, ProjectsMessageTypes.PREPOSITION_EVENT_TYPE, jsonPrePositionEvent);
+        final String routeKey = ProjectsGlobalInfo.getRouteKey(ProjectsFlags.PREPOSITION_FLAG,null).split("-")[0];
+        final ProjectsMessageVO messageVO = new ProjectsMessageVO(ProjectsFlags.PREPOSITION_FLAG, ProjectsFlags.REPORTING_FLAG, objectType, ProjectsMessageTypes.PREPOSITION_EVENT_TYPE, jsonPrePositionEvent,id);
         final Message message = MessageUtil.generateMessage(messageVO);
         try {
             rabbitTemplate.convertAndSend(ProjectsGlobalInfo.PROJECTS_TOPIC,routeKey,message);
@@ -64,8 +66,8 @@ public class PrePositionSender {
         }
 
         final String objectType = objectClass.getSimpleName();
-        final String routeKey = ProjectsGlobalInfo.getRouteKey(ProjectsFlags.PREPOSITION_FLAG).split("-")[1];
-        final ProjectsMessageVO messageVO = new ProjectsMessageVO(ProjectsFlags.PREPOSITION_FLAG, ProjectsFlags.DIRECT_FLAG, objectType, ProjectsMessageTypes.PREPOSITION_EXECUTION_TYPE, jsonPrePositionExecution);
+        final String routeKey = ProjectsGlobalInfo.getRouteKey(ProjectsFlags.PREPOSITION_FLAG,null).split("-")[1];
+        final ProjectsMessageVO messageVO = new ProjectsMessageVO(ProjectsFlags.PREPOSITION_FLAG, ProjectsFlags.DIRECT_FLAG, objectType, ProjectsMessageTypes.PREPOSITION_EXECUTION_TYPE, jsonPrePositionExecution,id);
         final Message message = MessageUtil.generateMessage(messageVO);
         try {
             rabbitTemplate.convertAndSend(ProjectsGlobalInfo.PROJECTS_TOPIC,routeKey,message);

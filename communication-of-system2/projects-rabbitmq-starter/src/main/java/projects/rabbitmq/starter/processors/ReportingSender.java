@@ -36,7 +36,7 @@ public class ReportingSender {
         }
 
         final String objectType = objectClass.getSimpleName();
-        final String routeKey = ProjectsGlobalInfo.getRouteKey(ProjectsFlags.REPORTING_FLAG);
+        final String routeKey = ProjectsGlobalInfo.getRouteKey(ProjectsFlags.REPORTING_FLAG,null);
         final ProjectsMessageVO messageVO = new ProjectsMessageVO(ProjectsFlags.REPORTING_FLAG, ProjectsFlags.DIRECT_FLAG, objectType, ProjectsMessageTypes.COORDINATION_TYPE, jsonCoordination);
         final Message coorMessage = MessageUtil.generateMessage(messageVO);
         try {

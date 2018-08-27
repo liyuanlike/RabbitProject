@@ -44,7 +44,8 @@ public class ProjectsBusinessConfig {
     @Bean
     @ConditionalOnProperty(prefix = "projects.system",value = "flag", havingValue = ProjectsFlags.PREPOSITION_FLAG)
     public PrePositionSender prePositionSender(AmqpTemplate rabbitTemplate){
-        return new PrePositionSender(rabbitTemplate);
+        final String id = projectsProperties.getId();
+        return new PrePositionSender(rabbitTemplate,id);
     }
 
     @Bean
