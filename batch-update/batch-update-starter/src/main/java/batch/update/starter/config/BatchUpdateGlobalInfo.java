@@ -53,7 +53,7 @@ public class BatchUpdateGlobalInfo {
 
     // 内部使用 获取自身系统路由键
     public static String getRouteKey(String flag){
-        if (flag != null && flag.contains(flag)){
+        if (flag != null /*&& flag.contains(flag)*/){
             return flag + INSTRUCTION_DATA_SUFFIX;
         }
         return null;
@@ -66,7 +66,7 @@ public class BatchUpdateGlobalInfo {
 
     // 内部使用 获取自身系统接收消息的队列名称
     protected static String getQueueName(String flag){
-        if (flag != null && flags.contains(flag)){
+        if (flag != null /*&& flags.contains(flag)*/){
             return flag+QUEUE_SUFFIX;
         }
         return null;
