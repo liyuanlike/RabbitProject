@@ -4,10 +4,10 @@ server:
 batch:
   system:
     enabled: true
-    flag: REPORTING
+    flag: DIRECT
 spring:
   rabbitmq:
-    host: localhost
+    host: 192.168.1.155
     port: 5672
     password: guest
     username: guest

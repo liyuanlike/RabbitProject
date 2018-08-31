@@ -16,6 +16,9 @@ import org.springframework.context.annotation.PropertySource;
 import projects.rabbitmq.starter.domain.ProjectsFlags;
 import projects.rabbitmq.starter.domain.ProjectsProperties;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @apiNote 封装各个系统与RabbitMQ整合的配置
  */
@@ -279,6 +282,7 @@ public class ProjectsRabbitConfig {
      */
     @Bean
     @ConditionalOnBean(name = {"planAcceptProgrammeQueue"})
+    @ConditionalOnMissingBean
     public Binding bindingPlanAcceptProgrammeToExchange(TopicExchange projectsGlobalExchange, Queue planAcceptProgrammeQueue){
         String binding = ProjectsGlobalInfo.getBinding(projectsProperties.getFlag(),null);
         if (binding == null){
@@ -287,4 +291,35 @@ public class ProjectsRabbitConfig {
         return BindingBuilder.bind(planAcceptProgrammeQueue).to(projectsGlobalExchange).with(binding);
     }
 
+    // ================================== 为所有系统自定义的灵活配置 ================================
+    @Bean
+    public HeadersExchange headersGlobalExchange(){
+        return new HeadersExchange(ProjectsGlobalInfo.HEADERS_TOPIC,true,false);
+    }
+
+    @Bean
+    @ConditionalOnProperty(prefix = "projects.system",value = "flag")
+    public Queue headerQueue(){
+        if (projectsProperties.getFlag() == null){
+            throw new RuntimeException("请检查  projects.system.flag属性是否合法");
+        }
+        String id = projectsProperties.getId() == null ? "" : projectsProperties.getId();
+        String queueName = projectsProperties.getFlag() + "_" + id +"_HEADER_QUEUE";
+        return new Queue(queueName.toUpperCase());
+    }
+
+    @Bean
+    @ConditionalOnProperty(prefix = "projects.system",value = "flag")
+    public Binding bindingQueueToHeadersExchange(HeadersExchange headersGlobalExchange, Queue headerQueue){
+        Map<String, Object> headersMap = new HashMap<>();
+        if (projectsProperties.getFlag().equals(ProjectsFlags.PREPOSITION_FLAG)){
+            if (projectsProperties.getId() == null){
+                throw new RuntimeException("部委前置必须配置 projects.system.id");
+            }else{
+                headersMap.put(projectsProperties.getId(),projectsProperties.getId());
+            }
+        }
+        headersMap.put(projectsProperties.getFlag(),projectsProperties.getFlag());
+        return BindingBuilder.bind(headerQueue).to(headersGlobalExchange).whereAny(headersMap).match();
+    }
 }

@@ -59,4 +59,10 @@ public class ProjectsBusinessConfig {
     public PlanSender planSender(AmqpTemplate rabbitTemplate){
         return new PlanSender(rabbitTemplate);
     }
+
+    @Bean
+    @ConditionalOnProperty(prefix = "projects.system",value = "flag")
+    public CustomSender customSender(AmqpTemplate rabbitTemplate){
+        return new CustomSender(rabbitTemplate,projectsProperties.getFlag(),projectsProperties.getId());
+    }
 }

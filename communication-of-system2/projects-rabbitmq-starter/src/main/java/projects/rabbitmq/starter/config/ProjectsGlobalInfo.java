@@ -13,6 +13,11 @@ public class ProjectsGlobalInfo {
     public static final String PROJECTS_TOPIC = "PROJECTS_TOPIC";
 
     /**
+     * @apiNote 为所有的系统封装统一的 Headers Topic
+     */
+    public static final String HEADERS_TOPIC = "HEADERS_TOPIC";
+
+    /**
      * @apiNote 定义拼接的前缀信息 内部使用
      */
     private static final String EVENT_SUFFIX = ".EVENT";

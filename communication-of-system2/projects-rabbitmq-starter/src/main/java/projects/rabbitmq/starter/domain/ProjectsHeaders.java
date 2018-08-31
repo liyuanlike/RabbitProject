@@ -32,6 +32,11 @@ public class ProjectsHeaders {
      */
     public static final String MESSAGE_TYPE = "MESSAGE_TYPE";
 
+    /**
+     * @apiNote 专门为自定义Headers Exchanger的部委系统提供的
+     */
+    public static final String SOURCE_ID = "SOURCE_ID";
+
     public static final Set<String> BUSINESS_KEYS = new HashSet<>();
 
     static {
