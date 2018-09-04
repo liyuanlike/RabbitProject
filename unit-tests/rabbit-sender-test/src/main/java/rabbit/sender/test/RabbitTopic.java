@@ -29,8 +29,8 @@ public class RabbitTopic {
     }
 
     //对列绑定并关联到ROUTINGKEY
-    @Bean
-    Binding bindingExchangeMessage2(Queue queueMessage2, TopicExchange exchange) {
-        return BindingBuilder.bind(queueMessage2).to(exchange).with("#");
-    }
+//    @Bean
+//    Binding bindingExchangeMessage2(Queue queueMessage2, TopicExchange exchange) {
+//        return BindingBuilder.bind(queueMessage2).to(exchange).with("#");
+//    }
 }

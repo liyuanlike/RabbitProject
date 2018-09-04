@@ -1,10 +1,13 @@
-#spring:
-#  rabbitmq:
-#    host: localhost
-#    port: 5672
-#    username: guest
-#    password: guest
-
+spring:
+  rabbitmq:
+    host: 192.168.1.155
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        retry:
+          enabled: false
 ---
 # 公众号
 projects:
