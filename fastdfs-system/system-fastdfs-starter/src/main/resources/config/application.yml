@@ -1,0 +1,13 @@
+#此文件会被优先加载，优先级最高。
+# 用于配置全局的，固定不变的属性，不会被覆盖
+
+
+fdfs:
+  so-timeout: 30000
+  thumb-image:
+    height: 150
+    width: 150
+  tracker-list:
+    - 192.168.1.200:22122
+  pool:
+    jmx-enabled: false

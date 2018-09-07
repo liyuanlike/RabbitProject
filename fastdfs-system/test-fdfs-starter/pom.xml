@@ -30,12 +30,19 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <!--引入batch-update starter的依赖-->
+        <dependency>
+            <groupId>batch.update.starter</groupId>
+            <artifactId>batch-update-starter</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
         <dependency>
             <groupId>system.fastdfs.starter</groupId>
             <artifactId>system-fastdfs-starter</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

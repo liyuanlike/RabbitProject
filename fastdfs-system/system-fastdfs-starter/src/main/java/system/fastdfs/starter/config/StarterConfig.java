@@ -9,6 +9,6 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @Import(FdfsClientConfig.class)
 @ComponentScan(basePackages = {"system.fastdfs.starter"})
-@PropertySource(value = {"classpath:default.properties"},ignoreResourceNotFound = true)
+@PropertySource(value = {"classpath:fdfs.properties"},ignoreResourceNotFound = true)
 public class StarterConfig {
 }
