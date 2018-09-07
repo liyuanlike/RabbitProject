@@ -1,5 +1,6 @@
 package test.fdfs.starter.controllers;
 
+import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +18,24 @@ public class TestUploadController {
     @Autowired
     private FdfsClientWrapper fdfsClientWrapper;
 
+    @Autowired
+    private FastFileStorageClient client;
+
     @GetMapping("/upload")
     public Object uploadTest(){
         String s = null;
         try {
-            s = fdfsClientWrapper.uploadFile(new File("/Users/liuxun/Desktop/aaaa.png"));
+            s = fdfsClientWrapper.uploadFile(new File("/Users/liuxun/Desktop/test.mp4"));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         logger.info("{}",s);
         return s;
+    }
+
+    @GetMapping("upload2")
+    public Object uploadTest2(){
+        return null;
     }
 }

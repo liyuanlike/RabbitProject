@@ -35,7 +35,7 @@ public class FdfsClientWrapper {
      * @throws IOException
      */
     public String uploadFile(File file) throws IOException {
-        StorePath storePath = storageClient.uploadImageAndCrtThumbImage(new FileInputStream(file),
+        StorePath storePath = storageClient.uploadFile(new FileInputStream(file),
                 file.length(),
                 FilenameUtils.getExtension(file.getName()),
                 null);
