@@ -1,3 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration =\
-  reporting.rabbitmq.starter.config.ReportingRabbitConfig,\
-  reporting.rabbitmq.starter.config.RabbitListenerConfig

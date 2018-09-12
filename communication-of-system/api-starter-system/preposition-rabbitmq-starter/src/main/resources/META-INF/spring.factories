@@ -1,3 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration =\
-  preposition.rabbitmq.starter.config.PrePositionRabbitConfig,\
-  preposition.rabbitmq.starter.config.RabbitListenerConfig
