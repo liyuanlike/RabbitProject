@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration =\
+    heartbeat.monitor.starter.config.MonitorConfig

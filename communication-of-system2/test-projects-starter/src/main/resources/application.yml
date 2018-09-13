@@ -25,6 +25,7 @@ projects:
     enabled: true
     flag: PREPOSITION
     id: AAA
+    name: 部委前置AAA
 server:
   port: 8081
 spring:
@@ -45,6 +46,7 @@ projects:
   system:
     enabled: true
     flag: REPORTING
+    name: 接报系统
 server:
   port: 8083
 spring:
@@ -81,3 +83,15 @@ server:
   port: 8086
 spring:
   profiles: preposition2
+
+---
+# 监控系统
+projects:
+  system:
+    enabled: true
+    name: 监控系统
+    flag: MONITOR
+server:
+  port: 8087
+spring:
+  profiles: monitor
