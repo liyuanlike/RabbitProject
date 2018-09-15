@@ -1,0 +1,22 @@
+server:
+  port: 8011
+
+#数据库连接配置
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.1.155:3306/monitor
+    username: root
+    password: root
+  jpa:
+    database: MYSQL  #指定数据库类型
+    show-sql: true   #控制台打印SQL
+    hibernate:
+      ddl-auto: update #建表策略 根据实体更新表结构
+      naming:   #表字段命名策略
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyHbmImpl
+        #physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl 此配置不会将驼峰转为下划线
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+
+
