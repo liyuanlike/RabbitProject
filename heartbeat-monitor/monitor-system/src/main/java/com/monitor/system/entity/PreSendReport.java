@@ -3,10 +3,11 @@ package com.monitor.system.entity;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import java.util.Date;
 
 /**
- * @apiNote 部委前置发出上报的监控信息
  * @author liuxun
+ * @apiNote 部委前置发出上报的监控信息
  */
 @Entity
 @DiscriminatorValue(value = "PreSendReport")
@@ -15,25 +16,25 @@ public class PreSendReport extends PreMsgInfo {
     public PreSendReport() {
     }
 
-    @Column(length = 30)
-    private String sendIp; //发出IP
+    @Column
+    private Date sendTime; // 发出时间
 
-    @Column(length = 30)
-    private String receiveIp; //接收IP
+    @Column
+    private Boolean isSuccess; // 是否发出成
 
-    public String getSendIp() {
-        return sendIp;
+    public Date getSendTime() {
+        return sendTime;
     }
 
-    public void setSendIp(String sendIp) {
-        this.sendIp = sendIp;
+    public void setSendTime(Date sendTime) {
+        this.sendTime = sendTime;
     }
 
-    public String getReceiveIp() {
-        return receiveIp;
+    public Boolean getSuccess() {
+        return isSuccess;
     }
 
-    public void setReceiveIp(String receiveIp) {
-        this.receiveIp = receiveIp;
+    public void setSuccess(Boolean success) {
+        isSuccess = success;
     }
 }

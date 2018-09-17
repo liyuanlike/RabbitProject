@@ -23,23 +23,18 @@ public class PreMsgInfo implements Serializable {
     private Long id; // 主键ID
 
     @Column(length = 30)
-    private String eventId; // 事件ID
-
-    @Column(length = 30)
     private String taskID;// 任务ID
 
     @Column(length = 30)
-    private String instructionId;// 指令ID
+    private String sendIp; //发出IP
 
-    @Column
-    private Date receiveTime; // 接收时间
-
-    @Column
-    private Boolean isResolved; // 是否处理完毕
+    @Column(length = 30)
+    private String receiveIp; //接收IP
 
 
     @Column(nullable = false, length = 30)
     private String prepositionId; // 此处处理的是部委前置的信息，此字段值用不为null
+
 
     public Long getId() {
         return id;
@@ -47,14 +42,6 @@ public class PreMsgInfo implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(String eventId) {
-        this.eventId = eventId;
     }
 
     public String getTaskID() {
@@ -65,28 +52,20 @@ public class PreMsgInfo implements Serializable {
         this.taskID = taskID;
     }
 
-    public String getInstructionId() {
-        return instructionId;
+    public String getSendIp() {
+        return sendIp;
     }
 
-    public void setInstructionId(String instructionId) {
-        this.instructionId = instructionId;
+    public void setSendIp(String sendIp) {
+        this.sendIp = sendIp;
     }
 
-    public Date getReceiveTime() {
-        return receiveTime;
+    public String getReceiveIp() {
+        return receiveIp;
     }
 
-    public void setReceiveTime(Date receiveTime) {
-        this.receiveTime = receiveTime;
-    }
-
-    public Boolean getResolved() {
-        return isResolved;
-    }
-
-    public void setResolved(Boolean resolved) {
-        isResolved = resolved;
+    public void setReceiveIp(String receiveIp) {
+        this.receiveIp = receiveIp;
     }
 
     public String getPrepositionId() {

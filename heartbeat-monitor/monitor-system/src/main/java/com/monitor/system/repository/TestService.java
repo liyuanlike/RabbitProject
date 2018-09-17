@@ -3,6 +3,7 @@ package com.monitor.system.repository;
 import com.monitor.system.entity.WeChatMsgInfo;
 import com.monitor.system.entity.WeChatSendAppeal;
 import com.monitor.system.entity.WeChatSendReport;
+import com.monitor.system.vo.ChartVO;
 import com.monitor.system.vo.PageVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,9 @@ public class TestService {
 
     @Autowired
     private GeneralService generalService;
+
+    @Autowired
+    private WrapperService wrapperService;
 
     public void testInsert() {
         for (int i = 0; i < 84; i++) {
@@ -44,6 +49,7 @@ public class TestService {
             WeChatSendReport report = new WeChatSendReport();
             report.setReportId("ReportId2");
             report.setReceiveIp("192.168.1.222");
+            appeal.setSendTime(new Date(new Date().getTime() - 24 * 60 * 60 + 60 * i));
             em.persist(appeal);
             em.persist(appeal2);
             em.persist(appeal3);
@@ -72,10 +78,29 @@ public class TestService {
     */
 
     public PageVO testQuery() {
-        Map<String,Object> params =new HashMap<>();
-        params.put("appealId","AppelId1");
+        Map<String, Object> params = new HashMap<>();
+//        params.put("appealId","AppelId1");
 //        params.put("receiveIp","192.168.1.112");
 //        params.put("isSuccess",true);
-      return generalService.criteriaQuery(1L,10L,WeChatMsgInfo.class,WeChatSendAppeal.class,params);
+        return generalService.criteriaQuery(1L, 10L, WeChatMsgInfo.class, WeChatSendAppeal.class, params);
+    }
+
+    public Long testGetCount() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("receiveIp", "192.168.1.111");
+        return generalService.getTotalCount(WeChatMsgInfo.class, WeChatSendAppeal.class, params);
+    }
+
+    public ChartVO testChart() {
+        return wrapperService.getChartDataByCriteria(WeChatMsgInfo.class, WeChatSendAppeal.class, null, "sendTime");
+    }
+
+    public void testSaveOrUpdate() {
+        WeChatSendAppeal appeal = new WeChatSendAppeal();
+        appeal.setAppealId("XXXXXXXX");
+        appeal.setReceiveIp("192.168.1.115");
+        appeal.setSuccess(true);
+        appeal.setSendTime(new Date());
+        generalService.saveOrUpdateByField(WeChatMsgInfo.class, WeChatSendAppeal.class, "appealId", "AppelId1", appeal);
     }
 }
