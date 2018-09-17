@@ -1,16 +1,10 @@
-package com.monitor.system.entity;
+package heartbeat.monitor.starter.domain.msgs;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @apiNote 接报监控数据的统一父类
  */
-@Entity
-@Table(name = "PreMsgInfo")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING, name = "type")
 public class PreMsgInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -18,31 +12,13 @@ public class PreMsgInfo implements Serializable {
     }
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id; // 主键ID
-
-    @Column
     private String taskID;// 任务ID
 
-    @Column
     private String sendIp; //发出IP
 
-    @Column
     private String receiveIp; //接收IP
 
-
-    @Column(nullable = false)
     private String prepositionId; // 此处处理的是部委前置的信息，此字段值用不为null
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getTaskID() {
         return taskID;

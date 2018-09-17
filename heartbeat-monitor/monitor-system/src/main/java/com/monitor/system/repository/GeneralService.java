@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -136,6 +137,7 @@ public class GeneralService {
      * @param fieldValue
      * @apiNote 根据指定String类型字段插入或更新数据
      */
+    @Transactional
     public void saveOrUpdateByField(Class<?> parent, Class<?> target, String field, String fieldValue, Object object) {
         final String parentName = parent.getSimpleName();
         final String targetName = target.getSimpleName();
@@ -148,5 +150,9 @@ public class GeneralService {
         em.persist(object);
     }
 
+    @Transactional
+    public void persisent(Object object){
+        em.persist(object);
+    }
 
 }

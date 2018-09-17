@@ -14,11 +14,18 @@ public class MonitorGlobalInfo {
     public static final String MONITOR_QUEUE_NAME = "MONITOR_QUEUE";
 
     /**
+     * @apiNote 监控系统接收 业务监控数据的队列名称
+     */
+    public static final String BUSINESS_MONITOR_QUEUE = "BUSINESS_MONITOR_QUEUE";
+
+    /**
      * @apiNote 监控系统的 需要配置的Flag标志
      */
     public static final String MONITOR_FLAG = "MONITOR";
 
-    public static final String MONITOR_EXCHANGE = "MONITOR_EXCHANGE";
+    public static final String HEARTBEAT_MONITOR_EXCHANGE = "HEARTBEAT_MONITOR_EXCHANGE";
+
+    public static final String BUSINESS_MONITOR_TOPIC = "BUSINESS_MONITOR_TOPIC";
 
     /**
      * @apiNote 存放实时的 部委前置各个实例的健康信息

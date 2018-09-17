@@ -1,6 +1,5 @@
-package com.monitor.system.entity;
+package heartbeat.monitor.starter.domain.msgs;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,43 +7,22 @@ import java.util.Date;
  * @apiNote 异常用户
  * @author liuxun
  */
-@Entity
-@Table(name = "ExceptionUser")
 public class ExceptionUser implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public ExceptionUser() {
     }
 
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id; // 异常用户ID
-
-    @Column
     private Date warnBeginTime; // 预警开始时间
 
-    @Column
     private String warnIp; // 预警IP
 
-    @Column
     private String warningContent; //预警内容
 
 
-    @Column(nullable = false)
     private String flag; // 系统标识
 
-    @Column(nullable = true)
     private String  prepositionId; // 如果非部委前置系统，此字段是空值
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Date getWarnBeginTime() {
         return warnBeginTime;

@@ -50,6 +50,6 @@ public class HeartBeatSender {
                 .setHeader("FLAG", metrics.getFlag())
                 .setHeader("ID", metrics.getId())
                 .build();
-        rabbitTemplate.convertAndSend(MonitorGlobalInfo.MONITOR_EXCHANGE,"",message);
+        rabbitTemplate.convertAndSend(MonitorGlobalInfo.HEARTBEAT_MONITOR_EXCHANGE,"",message);
     }
 }

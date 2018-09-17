@@ -11,13 +11,13 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue(value = "WeChatSendReport")
 public class WeChatSendReport extends WeChatMsgInfo{
-   private String  reportId; // 上报ID
+   private String  taskId; // 上报ID
 
-    public String getReportId() {
-        return reportId;
+    public String getTaskId() {
+        return taskId;
     }
 
-    public void setReportId(String reportId) {
-        this.reportId = reportId;
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 }

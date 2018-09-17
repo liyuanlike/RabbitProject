@@ -18,16 +18,21 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class MonitorConfig {
     /**
-     * @apiNote 定义统一的 监控Topic主题交换机
+     * @apiNote 定义心跳的 监控Topic主题交换机
      * @return
      */
     @Bean
     public TopicExchange monitorGlobalExchange(){
-        return new TopicExchange(MonitorGlobalInfo.MONITOR_EXCHANGE);
+        return new TopicExchange(MonitorGlobalInfo.HEARTBEAT_MONITOR_EXCHANGE);
+    }
+
+    @Bean
+    public TopicExchange monitorBusinessExchange(){
+        return new TopicExchange(MonitorGlobalInfo.BUSINESS_MONITOR_TOPIC);
     }
 
     /**
-     * @apiNote  为接报系统封装获取 对应的事件消息的队列
+     * @apiNote  为接监控系统封装获取 心跳消息的队列
      * @return
      */
     @Bean
@@ -42,8 +47,28 @@ public class MonitorConfig {
 
     @Bean
     @ConditionalOnProperty(prefix = "projects.system",value = "flag", havingValue = MonitorGlobalInfo.MONITOR_FLAG)
-    public Binding bindingGInstructionToExchange(TopicExchange monitorGlobalExchange, Queue acceptHeartQueue){
+    public Binding bindingHeartBeatExchange(TopicExchange monitorGlobalExchange, Queue acceptHeartQueue){
         return BindingBuilder.bind(acceptHeartQueue).to(monitorGlobalExchange).with("#");
+    }
+
+    /**
+     * @apiNote  为接监控系统封装获取业务监控数据的队列
+     * @return
+     */
+    @Bean
+    @ConditionalOnProperty(prefix = "projects.system",value = "flag", havingValue = MonitorGlobalInfo.MONITOR_FLAG)
+    public Queue acceptBusinessQueue(){
+        final String queueName = MonitorGlobalInfo.BUSINESS_MONITOR_QUEUE;
+        if (queueName == null){
+            throw new RuntimeException("请检查 projects.system.flag属性值是否合法 ");
+        }
+        return new Queue(queueName);
+    }
+
+    @Bean
+    @ConditionalOnProperty(prefix = "projects.system",value = "flag", havingValue = MonitorGlobalInfo.MONITOR_FLAG)
+    public Binding bindingGInstructionToExchange(TopicExchange monitorBusinessExchange, Queue acceptBusinessQueue){
+        return BindingBuilder.bind(acceptBusinessQueue).to(monitorBusinessExchange).with("#");
     }
 
 }

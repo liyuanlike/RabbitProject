@@ -1,27 +1,20 @@
-package com.monitor.system.entity;
+package heartbeat.monitor.starter.domain.msgs;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
 import java.util.Date;
 
 /**
  * @apiNote 接报系统发送的协调事件监控
  */
-@Entity
-@DiscriminatorValue(value = "ReportSendEvent")
 public class ReportSendEvent extends ReportMsgInfo {
     public ReportSendEvent() {
     }
 
     private String eventId; // 接报发送的协调事件ID
 
-    @Column
     private Date sendTime; // 发出时间
 
     private String sendIp; // 发出IP
 
-    @Column
     private Boolean isSuccess; // 是否发送成功
 
     public String getEventId() {
