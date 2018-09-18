@@ -1,6 +1,7 @@
 package com.monitor.system.processors;
 
 import com.alibaba.fastjson.JSON;
+import com.monitor.system.config.MonitorSystemInfo;
 import com.monitor.system.entity.*;
 import com.monitor.system.repository.GeneralService;
 import heartbeat.monitor.starter.domain.UserCount;
@@ -22,7 +23,9 @@ public class MonitorBusinessResolver extends AbstractBusinessReceiver {
     @Override
     public void resolveBusiness(String body, String objectType) {
         if (objectType.equals(UserCount.class.getSimpleName())) { // 处理 用户离线在线数统计  不持久化
-            //TODO: 处理在线离线数据
+            UserCount userCount = JSON.parseObject(body, UserCount.class);
+            String key = userCount.getFlag() + (userCount.getPrepositionId() == null ? "" : "_" + userCount.getPrepositionId());
+            MonitorSystemInfo.IN_OUT_LINE_USER_MAP.put(key, userCount);
         } else if (objectType.equals(ExceptionUser.class.getSimpleName())) { // 处理异常用户 直接保存
             ExceptionUser exceptionUser = JSON.parseObject(body, ExceptionUser.class);
             generalService.persisent(exceptionUser);

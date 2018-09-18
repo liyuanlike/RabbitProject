@@ -47,7 +47,7 @@ public class TestService {
             appeal3.setReceiveIp("192.168.1.112");
             appeal3.setSuccess(true);
             WeChatSendReport report = new WeChatSendReport();
-            report.setReportId("ReportId2");
+            report.setTaskId("ReportId2");
             report.setReceiveIp("192.168.1.222");
             appeal.setSendTime(new Date(new Date().getTime() - 24 * 60 * 60 + 60 * i));
             em.persist(appeal);
@@ -102,5 +102,9 @@ public class TestService {
         appeal.setSuccess(true);
         appeal.setSendTime(new Date());
         generalService.saveOrUpdateByField(WeChatMsgInfo.class, WeChatSendAppeal.class, "appealId", "AppelId1", appeal);
+    }
+
+    public static void main(String[] args){
+        System.out.println("aaa_"+null);
     }
 }

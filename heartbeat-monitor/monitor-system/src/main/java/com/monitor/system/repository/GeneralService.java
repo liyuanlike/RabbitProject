@@ -151,8 +151,18 @@ public class GeneralService {
     }
 
     @Transactional
-    public void persisent(Object object){
+    public void persisent(Object object) {
         em.persist(object);
+    }
+
+    @Transactional
+    public void merge(Object object) {
+        em.merge(object);
+    }
+
+    public Object findById(Class<?> parent, Long id) {
+        final Object o = em.find(parent, id);
+        return o;
     }
 
 }
